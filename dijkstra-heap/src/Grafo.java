@@ -1,13 +1,14 @@
 /**
  *  
  * @author Juan Chozas Sumbera
- *
+ * juanchozass@gmail.com
+ * 
  */
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.ArrayList;
+import java.util.HashSet;
 
 /*
  * Grafo dirigido con representacion interna mediante listas de adyacencia
@@ -29,12 +30,7 @@ public class Grafo {
 	/*
 	 * Pareja para las listas de adyacencia: vertice destino, coste de la arista
 	 */
-	static class Pair<T, U> {
-		T fst; U snd;
-		public Pair(T f, U s) {
-			fst = f; snd = s;
-		}
-	}
+	
 	
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 	
@@ -44,7 +40,7 @@ public class Grafo {
 	 * el vertice v' adyacente a v
 	 * el coste de la arista v --> v'
 	 */
-	private List<Set<Pair<Integer, Integer>>> ady;
+	private List<Set<Par<Integer, Integer>>> ady;
 	
 	
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -57,7 +53,7 @@ public class Grafo {
 		final int n = aristas.length;
 		ady = new ArrayList<>(n);
 		for (int i = 0; i < n; i++) {
-			ady.add(i, new HashSet<Pair<Integer, Integer>>());
+			ady.add(i, new HashSet<Par<Integer, Integer>>());
 		}
 		
 		for (Arista a : aristas) {
@@ -65,22 +61,22 @@ public class Grafo {
 				throw new IndexOutOfBoundsException(
 						"No se admiten aristas que conecten vertices con indice mayor o igual el numero total de vertices");
 			
-			ady.get(a.orig).add(new Pair<Integer, Integer>(a.dest, a.cost));
+			ady.get(a.orig).add(new Par<Integer, Integer>(a.dest, a.cost));
 		}
 	}
 	
 	/*
-	 * Para cada vertice v, imprime v ---> {(v', c) ... (v', c)}
+	 * Para cada vertice v, imprime v -> {(v', c) ... (v', c)}
 	 * donde cada par (v', c) contiene
 	 * el vertice v' adyacente a v 
-	 * el coste c de la arista v ---> v'
+	 * el coste c de la arista v -> v'
 	 */
 	public void print() {
 		for (int i = 0; i < ady.size(); i++) {
-			String s = i + " ---> {";
+			String s = i + " -> {";
 			boolean hay_ady = false;
 			
-			for (Pair<Integer, Integer> par : ady.get(i)) {
+			for (Par<Integer, Integer> par : ady.get(i)) {
 				hay_ady = true;
 				s += "(" + par.fst + ", " + par.snd + "), ";
 			}
