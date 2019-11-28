@@ -18,8 +18,7 @@ public class Dijkstra {
 	
 	public static void main(String[] args) {
 		Grafo g = new Grafo();
-		MonticuloSesgado m = new MonticuloSesgado();
-		
+		MonticuloSesgado<Integer> m = new MonticuloSesgado<>();
 	}
 
 }
