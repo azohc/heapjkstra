@@ -18,7 +18,10 @@ public class Dijkstra {
 	
 	public static void main(String[] args) {
 		Grafo g = new Grafo();
-		MonticuloSesgado<Integer> m = new MonticuloSesgado<>();
+		MonticuloSesgado m = new MonticuloSesgado(1, 2, 3);
+		m.print();
+		m.decrecerClave(2, 0);
+		m.print();
 	}
 
 }

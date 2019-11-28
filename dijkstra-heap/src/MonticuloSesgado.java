@@ -7,20 +7,26 @@ import java.util.HashMap;
  * 
  */
 
-class Nodo <V> {
-	int clave;		// clave unica en el arbol 
-	V valor;		// valor asociado a clave
-	Nodo<V> izq;	// hijo izquierdo
-	Nodo<V> der;	// hijo derecho
+class Nodo {
+	int _clave;		// clave unica en el arbol 
+	int _valor;		// valor asociado a clave
+	Nodo izq;		// hijo izquierdo
+	Nodo der;		// hijo derecho
+	Nodo padre;		// nodo padre
 	
-	public Nodo(int c, V v) { clave = c; valor = v; }
-	public Nodo(Nodo<V> i, int c, V v, Nodo<V> d) { clave = c; valor = v; izq = i; der = d; }
-	
+	public Nodo(Nodo n) {
+		_clave = n._clave; _valor = n._valor;
+		if (n.izq != null) 		izq = new Nodo(n.izq); 
+		if (n.der != null) 		der = new Nodo(n.der);
+	}
+	public Nodo(int clave, int valor) { _clave = clave; _valor = valor; }
+	public Nodo(Nodo i, int clave, int valor, Nodo d) { _clave = clave; _valor = valor; izq = i; der = d; }
+
 	public void claveValor(boolean mostrarClaves) {
 		if (mostrarClaves) {
-			System.out.print("(" + clave + ", " + valor + ") ");
+			System.out.print("(" + _clave + ", " + _valor + ") ");
 		} else {			
-			System.out.print(valor + " ");
+			System.out.print(_valor + " ");
 		}
 	}
 	public void preorden(boolean claves) {
@@ -43,12 +49,12 @@ class Nodo <V> {
 /*
  * Monticulo sesgado con la operacion decrecerClave
  */
-public class MonticuloSesgado <V extends Comparable<V>> {
+public class MonticuloSesgado {
 	
 	private int tam;
-	private Nodo<V> raiz;
-	private HashMap<Integer, Nodo<V>> tabla;
-	
+	private Nodo raiz;
+	private HashMap<Integer, Nodo> tabla;
+		
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 	public MonticuloSesgado() {
@@ -57,24 +63,24 @@ public class MonticuloSesgado <V extends Comparable<V>> {
 		tabla = new HashMap<>();
 	}
 	
-	public MonticuloSesgado(V... vs) {
+	public MonticuloSesgado(int... vs) {
 		tabla = new HashMap<>();
-		for (V v : vs) {
+		for (int v : vs) {
 			insertar(v);
 		}
 	}
 	
-	public void insertar(V v) {
+	public void insertar(int v) {
 		int clave = tam;
-		if (tabla.containsKey(clave)) { //TODO change if -> while
+		while (tabla.containsKey(clave)) { 
 			clave++; 
 		}
-		Nodo<V> nodo = new Nodo<>(clave, v);
+		Nodo nodo = new Nodo(clave, v);
 		
 		if (vacio()) {
 			raiz = nodo;
 		} else {
-			raiz = join(raiz, nodo);
+			raiz = unir(raiz, nodo);
 		}		
 		
 		tabla.put(clave, nodo);
@@ -83,27 +89,61 @@ public class MonticuloSesgado <V extends Comparable<V>> {
 	
 	public void borrarMin() {
 		tam--;
-		raiz = join(izq(), der());
+		tabla.remove(raiz._clave);
+		raiz = unir(raiz.izq, raiz.der);
 	}
 	
 	public int min() {
-		return raiz.clave;
+		return raiz._valor;
 	}
 	
-	public Nodo<V> join(Nodo<V> n1, Nodo<V> n2) { 
+	public Nodo unir(Nodo n1, Nodo n2) { 
 	      
         if (n1 == null)  
             return n2; 
         if (n2 == null) 
             return n1; 
         
-        return (n1.valor.compareTo(n2.valor) > 0) ?
-        		new Nodo<V>(join(n1, n2.der), n2.clave, n2.valor, n2.izq) :
-        		new Nodo<V>(join(n1.der, n2), n1.clave, n1.valor, n1.izq); 
+        Nodo nodo = null;
+        if (n1._valor < n2._valor) {
+        	nodo = new Nodo(unir(n1.der, n2), n1._clave, n1._valor, n1.izq);
+        	nodo.padre = n1.padre;
+        } else {
+        	nodo = new Nodo(unir(n2.der, n1), n2._clave, n2._valor, n2.izq);
+        	nodo.padre = n2.padre;
+        }
+        		 
+        nodo.izq.padre = nodo; 
+        	
+        return nodo;
     } 
 
-	public void decrecerClave(int c, V v) {
+	public void decrecerClave(int c, int v) {
+		Nodo nodo = tabla.get(c);
+		nodo._valor = v;
 		
+		while (nodo.padre != null && nodo._valor < nodo.padre._valor) {
+			Nodo izq = nodo.izq;
+			Nodo der = nodo.der;
+			
+			if (nodo == nodo.padre.izq) {
+				nodo.izq = nodo.padre;
+				nodo.der = nodo.padre.der;
+				nodo.padre = nodo.padre.padre;
+				
+				// viejo nodo.padre ahora en nodo.izq
+				nodo.izq.padre = nodo;
+			} else {
+				nodo.der = nodo.padre;
+				nodo.izq = nodo.padre.izq;
+				nodo.padre = nodo.padre.padre;
+				
+				// viejo nodo.padre ahora en nodo.der
+				nodo.der.padre = nodo;
+			}
+			nodo.der.izq = izq;
+			nodo.der.der = der;
+		}
 	}
 	
 	public int tam() {
@@ -116,19 +156,12 @@ public class MonticuloSesgado <V extends Comparable<V>> {
 	
 	
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-	
-	private Nodo<V> izq() {
-		return raiz.izq;
-	}
-	
-	private Nodo<V> der() {
-		return raiz.der;
-	}
 
 	public void print() {
 		if (raiz == null) {
 			return;
 		}
+		System.out.print("recorrido preorden: ");
 		raiz.preorden(true);
 		System.out.println();
 	}
@@ -137,6 +170,7 @@ public class MonticuloSesgado <V extends Comparable<V>> {
 		if (raiz == null) {
 			return;
 		}
+		System.out.print("recorrido preorden: ");
 		raiz.preorden(false);
 		System.out.println();		
 	}
