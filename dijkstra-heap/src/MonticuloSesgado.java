@@ -12,7 +12,7 @@ public class MonticuloSesgado {
 	/*
 	 * Nodo del arbol binario para el monticulo
 	 */
-	class Nodo implements Cloneable {
+	class Nodo {
 		int clave;
 		Nodo izq;
 		Nodo der;
