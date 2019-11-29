@@ -130,19 +130,29 @@ public class MonticuloSesgado {
 				nodo.izq = nodo.padre;
 				nodo.der = nodo.padre.der;
 				nodo.padre = nodo.padre.padre;
+				nodo.der.padre = nodo;
 				
 				// viejo nodo.padre ahora en nodo.izq
 				nodo.izq.padre = nodo;
+				nodo.izq.izq = izq;
+				nodo.izq.der = der;
+				if(raiz == nodo.izq) {
+					raiz = nodo.izq.padre;
+				}
 			} else {
 				nodo.der = nodo.padre;
 				nodo.izq = nodo.padre.izq;
 				nodo.padre = nodo.padre.padre;
+				nodo.izq.padre = nodo;
 				
 				// viejo nodo.padre ahora en nodo.der
 				nodo.der.padre = nodo;
+				nodo.der.izq = izq;
+				nodo.der.der = der;
+				if(raiz == nodo.der) {
+					raiz = nodo.der.padre;
+				}
 			}
-			nodo.der.izq = izq;
-			nodo.der.der = der;
 		}
 	}
 	
