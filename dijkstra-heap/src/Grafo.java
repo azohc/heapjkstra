@@ -7,6 +7,7 @@
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 /*
  * Grafo con representacion interna mediante listas de adyacencia
@@ -45,7 +46,17 @@ public class Grafo {
 	 * Las aristas deben contener indices menores que el numero total de vertices
 	 */
 	public Grafo(boolean dirigido, Arista... aristas) {
-		final int n = aristas.length;
+		HashSet<Integer> s = new HashSet<>();
+		for (Arista a : aristas) {
+			if (!s.contains(a.orig)) {
+				s.add(a.orig);
+			}
+			if (!s.contains(a.dest)) {
+				s.add(a.dest);
+			}
+		}
+		
+		final int n = s.size();
 		ady = new ArrayList<>(n);
 		
 		for (int i = 0; i < n; i++) {

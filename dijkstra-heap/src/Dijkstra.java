@@ -49,14 +49,13 @@ public class Dijkstra {
 					try {
 						Q.decrecerClave(vk, ncoste);
 					} catch (IllegalAccessException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
 			}
 		}
 		
-		return new Par<int[], int[]>(p,d);
+		return new Par<int[], int[]>(d, p);
 	}
 	
 	private static int coste(Grafo g, int orig, int dest) {
@@ -74,11 +73,16 @@ public class Dijkstra {
 		return indefinido;			// si no existe arista
 	}
 	
-	static void print(int[] vs) {
-		for(int v : vs) {
-			System.out.print(v + ", ");
+	static void print(Par<int[], int[]> rs) {
+		System.out.println("vertice\tcoste\tvertice anterior");
+		for(int i = 0; i < rs.fst.length; i++) {
+			if (rs.fst[i] == Integer.MAX_VALUE) 
+				System.out.println(i + "\tinf\t" + rs.snd[i]);
+			else if (rs.snd[i] == Integer.MAX_VALUE)
+				System.out.println(i + "\t" +rs.fst[i]);
+			else 
+				System.out.println(i  + "\t" + rs.fst[i] + "\t" + rs.snd[i]);
 		}
-		System.out.println();
 	}
 	public static void main(String[] args) {
 		boolean dirigido = false;
@@ -95,8 +99,7 @@ public class Dijkstra {
 		
 		
 		Par<int[], int[]> resultados = dijkstra(g, 0);
-		print(resultados.fst); print(resultados.snd);
-		
+		print(resultados);	
 	}
 
 }

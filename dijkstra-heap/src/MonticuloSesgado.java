@@ -36,6 +36,12 @@ class Nodo {
 		der = d; 
 	}
 	
+	@Override
+	public String toString() {
+		if (izq == null && der == null)
+			return "[hoja] c: " + _clave + ", v: " + _valor;
+		return "c: " + _clave + ", v: " + _valor;
+	}
 	
 	public void claveValor(boolean mostrarClaves) {
 		if (mostrarClaves) {
@@ -114,6 +120,9 @@ public class MonticuloSesgado {
 		tam--;
 		tabla.remove(raiz._clave);
 		raiz = unir(raiz.izq, raiz.der);
+		if (tam != 0) {
+			raiz.padre = null;
+		}
 	}
 
 	
@@ -154,38 +163,43 @@ public class MonticuloSesgado {
 		if (nodo == null) {
 			throw new IllegalAccessException("no hay nodo almacenado con clave " + clave);
 		}
+		if (nodo._clave == raiz._clave) {
+			raiz._valor = valor;
+			return;
+		}
 		nodo._valor = valor;
 		
 		while (nodo.padre != null && nodo._valor < nodo.padre._valor) {
 			Nodo izq = nodo.izq;
 			Nodo der = nodo.der;
+			Nodo padre = nodo.padre;
 			
-			if (nodo == nodo.padre.izq) {
-				nodo.izq = nodo.padre;
-				nodo.der = nodo.padre.der;
-				nodo.padre = nodo.padre.padre;
-				if (nodo.der != null) nodo.der.padre = nodo;
-				
-				// viejo nodo.padre ahora en nodo.izq
-				nodo.izq.padre = nodo;
-				nodo.izq.izq = izq;
-				nodo.izq.der = der;
-				if(raiz == nodo.izq) {
-					raiz = nodo.izq.padre;
+			if (nodo == padre.izq) {
+				nodo.izq = padre;
+				nodo.der = padre.der;
+				nodo.padre = padre.padre;
+				if (nodo.der != null) {
+					nodo.der.padre = nodo;
 				}
 			} else {
 				nodo.der = nodo.padre;
 				nodo.izq = nodo.padre.izq;
 				nodo.padre = nodo.padre.padre;
-				if (nodo.izq != null) nodo.izq.padre = nodo;
-				
-				// viejo nodo.padre ahora en nodo.der
-				nodo.der.padre = nodo;
-				nodo.der.izq = izq;
-				nodo.der.der = der;
-				if(raiz == nodo.der) {
-					raiz = nodo.der.padre;
+				if (nodo.izq != null) {
+					nodo.izq.padre = nodo;
 				}
+			}
+			
+			if (padre.padre.izq == padre) {
+				padre.padre.izq = nodo;
+			} else {
+				padre.padre.der = nodo;
+			}
+			padre.padre = nodo;
+			padre.izq = izq;
+			padre.der = der;
+			if(raiz == padre) {
+				raiz = padre.padre;
 			}
 		}
 	}
