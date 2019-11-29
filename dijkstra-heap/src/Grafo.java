@@ -6,12 +6,10 @@
  */
 
 import java.util.List;
-import java.util.Set;
 import java.util.ArrayList;
-import java.util.HashSet;
 
 /*
- * Grafo dirigido con representacion interna mediante listas de adyacencia
+ * Grafo con representacion interna mediante listas de adyacencia
  */
 public class Grafo {
 	/*
@@ -19,41 +17,39 @@ public class Grafo {
 	 */
 	static class Arista {
 		int orig, dest, cost;
+		
 		public Arista(int o, int d) {
 			orig = o; dest = d;
 		}
+		
 		public Arista(int o, int d, int c) {
 			orig = o; dest = d; cost = c;
 		}
 	}
 	
-	/*
-	 * Pareja para las listas de adyacencia: vertice destino, coste de la arista
-	 */
-	
-	
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 	
 	/*
-	 * Lista de conjuntos de adyacencia: cada vertice v se asocia a un conjunto de pares
+	 * Lista de listas de adyacencia: cada vertice v se asocia a una lista de pares
 	 * los pares contienen 
 	 * el vertice v' adyacente a v
 	 * el coste de la arista v --> v'
 	 */
-	private List<Set<Par<Integer, Integer>>> ady;
+	public List<List<Par<Integer, Integer>>> ady;
 	
 	
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 	/*
-	 * Dada una o mas aristas, construye un grafo representado por conjuntos de adyacencia
+	 * Dado un booleano y una o mas aristas, construye un grafo normal o dirigido representado por listas de adyacencia
 	 * Las aristas deben contener indices menores que el numero total de vertices
 	 */
-	public Grafo(Arista... aristas) {
+	public Grafo(boolean dirigido, Arista... aristas) {
 		final int n = aristas.length;
 		ady = new ArrayList<>(n);
+		
 		for (int i = 0; i < n; i++) {
-			ady.add(i, new HashSet<Par<Integer, Integer>>());
+			ady.add(i, new ArrayList<Par<Integer, Integer>>());
 		}
 		
 		for (Arista a : aristas) {
@@ -62,18 +58,22 @@ public class Grafo {
 						"No se admiten aristas que conecten vertices con indice mayor o igual el numero total de vertices");
 			
 			ady.get(a.orig).add(new Par<Integer, Integer>(a.dest, a.cost));
+			
+			if (!dirigido) {
+				ady.get(a.dest).add(new Par<Integer, Integer>(a.orig, a.cost));
+			}
 		}
 	}
 	
 	/*
-	 * Para cada vertice v, imprime v -> {(v', c) ... (v', c)}
+	 * Para cada vertice v, imprime v -> [(v', c) ... (v', c)]
 	 * donde cada par (v', c) contiene
 	 * el vertice v' adyacente a v 
 	 * el coste c de la arista v -> v'
 	 */
 	public void print() {
 		for (int i = 0; i < ady.size(); i++) {
-			String s = i + " -> {";
+			String s = i + " -> [";
 			boolean hay_ady = false;
 			
 			for (Par<Integer, Integer> par : ady.get(i)) {
@@ -84,7 +84,12 @@ public class Grafo {
 			if (hay_ady) 
 				s = s.substring(0, s.length() - 2);
 		
-			System.out.println(s + "}");
+			System.out.println(s + "]");
 		}
+	}
+	
+	
+	public int size() {
+		return ady.size();
 	}
 }

@@ -14,14 +14,29 @@ class Nodo {
 	Nodo der;		// hijo derecho
 	Nodo padre;		// nodo padre
 	
+	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+	
 	public Nodo(Nodo n) {
 		_clave = n._clave; _valor = n._valor;
 		if (n.izq != null) 		izq = new Nodo(n.izq); 
 		if (n.der != null) 		der = new Nodo(n.der);
 	}
-	public Nodo(int clave, int valor) { _clave = clave; _valor = valor; }
-	public Nodo(Nodo i, int clave, int valor, Nodo d) { _clave = clave; _valor = valor; izq = i; der = d; }
-
+	
+	
+	public Nodo(int clave, int valor) { 
+		_clave = clave; 
+		_valor = valor; 
+	}
+	
+	
+	public Nodo(Nodo i, int clave, int valor, Nodo d) { 
+		_clave = clave; 
+		_valor = valor; 
+		izq = i; 
+		der = d; 
+	}
+	
+	
 	public void claveValor(boolean mostrarClaves) {
 		if (mostrarClaves) {
 			System.out.print("(" + _clave + ", " + _valor + ") ");
@@ -29,16 +44,22 @@ class Nodo {
 			System.out.print(_valor + " ");
 		}
 	}
+	
+	
 	public void preorden(boolean claves) {
 		claveValor(claves);
 		if (izq != null) izq.preorden(claves);	
 		if (der != null) der.preorden(claves);
 	}
+	
+	
 	public void inorden(boolean claves) {
 		if (izq != null) izq.inorden(claves);	
 		claveValor(claves);
 		if (der != null) der.inorden(claves);
 	}
+	
+	
 	public void postorden(boolean claves) {
 		if (izq != null) izq.postorden(claves);	
 		if (der != null) der.postorden(claves);
@@ -63,19 +84,20 @@ public class MonticuloSesgado {
 		tabla = new HashMap<>();
 	}
 	
+	
 	public MonticuloSesgado(int... vs) {
 		tabla = new HashMap<>();
 		for (int v : vs) {
-			insertar(v);
+			insertar(tam++, v);
 		}
 	}
 	
-	public void insertar(int v) {
-		int clave = tam;
-		while (tabla.containsKey(clave)) { 
-			clave++; 
+	
+	public void insertar(int clave, int valor) {
+		if (tabla.containsKey(clave)) { 
+			throw new IllegalArgumentException("ya existe la clave " + clave + " en el monticulo");
 		}
-		Nodo nodo = new Nodo(clave, v);
+		Nodo nodo = new Nodo(clave, valor);
 		
 		if (vacio()) {
 			raiz = nodo;
@@ -87,15 +109,23 @@ public class MonticuloSesgado {
 		tam++;
 	}
 	
+	
 	public void borrarMin() {
 		tam--;
 		tabla.remove(raiz._clave);
 		raiz = unir(raiz.izq, raiz.der);
 	}
+
 	
-	public int min() {
-		return raiz._valor;
+	public Par<Integer, Integer> min() {
+		return new Par<Integer, Integer>(raiz._clave, raiz._valor); 
 	}
+	
+	
+	public int minValor() {
+		return raiz._valor;
+	}	
+	
 	
 	public Nodo unir(Nodo n1, Nodo n2) { 
 	      
@@ -117,10 +147,14 @@ public class MonticuloSesgado {
         	
         return nodo;
     } 
+	
 
-	public void decrecerClave(int c, int v) {
-		Nodo nodo = tabla.get(c);
-		nodo._valor = v;
+	public void decrecerClave(int clave, int valor) throws IllegalAccessException {
+		Nodo nodo = tabla.get(clave);
+		if (nodo == null) {
+			throw new IllegalAccessException("no hay nodo almacenado con clave " + clave);
+		}
+		nodo._valor = valor;
 		
 		while (nodo.padre != null && nodo._valor < nodo.padre._valor) {
 			Nodo izq = nodo.izq;
@@ -130,7 +164,7 @@ public class MonticuloSesgado {
 				nodo.izq = nodo.padre;
 				nodo.der = nodo.padre.der;
 				nodo.padre = nodo.padre.padre;
-				nodo.der.padre = nodo;
+				if (nodo.der != null) nodo.der.padre = nodo;
 				
 				// viejo nodo.padre ahora en nodo.izq
 				nodo.izq.padre = nodo;
@@ -143,7 +177,7 @@ public class MonticuloSesgado {
 				nodo.der = nodo.padre;
 				nodo.izq = nodo.padre.izq;
 				nodo.padre = nodo.padre.padre;
-				nodo.izq.padre = nodo;
+				if (nodo.izq != null) nodo.izq.padre = nodo;
 				
 				// viejo nodo.padre ahora en nodo.der
 				nodo.der.padre = nodo;
@@ -156,17 +190,17 @@ public class MonticuloSesgado {
 		}
 	}
 	
+	
 	public int tam() {
 		return tam;
 	}
+	
 	
 	public boolean vacio() {
 		return tam == 0;
 	}
 	
 	
-	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-
 	public void print() {
 		if (raiz == null) {
 			return;
@@ -176,6 +210,7 @@ public class MonticuloSesgado {
 		System.out.println();
 	}
 
+	
 	public void printSinClaves() {
 		if (raiz == null) {
 			return;
@@ -183,6 +218,5 @@ public class MonticuloSesgado {
 		System.out.print("recorrido preorden: ");
 		raiz.preorden(false);
 		System.out.println();		
-	}
-		
+	}	
 }
