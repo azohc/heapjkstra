@@ -163,6 +163,9 @@ public class MonticuloSesgado {
 		if (nodo == null) {
 			throw new IllegalAccessException("no hay nodo almacenado con clave " + clave);
 		}
+		
+		if (valor >= nodo._valor) return;
+
 		if (nodo._clave == raiz._clave) {
 			raiz._valor = valor;
 			return;

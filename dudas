@@ -1,0 +1,11 @@
+sesgado: implementacion decrecerClave; cortar e unir
+
+dijkstra: como probar; MATRIZ ady random -> lista
+
+tiempo: como medir; apagar todo lo posible 
+	si son pequeños:
+		bucle y media
+	si no
+		desde java llamar a time y usar tiempo user
+		tres veces y media
+	tiempos mayores a 20ms

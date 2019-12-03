@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Random;
 
 /**
  *  
@@ -84,20 +85,46 @@ public class Dijkstra {
 				System.out.println(i  + "\t" + rs.fst[i] + "\t" + rs.snd[i]);
 		}
 	}
+
+	/*
+	 * Genera un grafo de n vertices creando aristas con costes aleatorios
+	 */
+	static Grafo generaGrafo(int n, boolean dirigido, long semilla) {
+		int[][] matriz = new int[n][n];
+		List<Grafo.Arista> aristas = new ArrayList<>();
+		
+		Random r = new Random(semilla);
+
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+				matriz[i][j] = r.nextInt(100);
+				if (matriz[i][j] <= 10) {
+					matriz[i][j] = 0;
+				}
+			}
+		}
+
+		/*
+		 * Para grafos dirigidos, hay que recorrer n*n vertices para crear las aristas
+		 * Para grafos normales, solo hay que recorrer la mitad inferior a la diagonal (accn)
+		 */
+		int accn = 0;
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < (dirigido ? n : accn); j++) {
+				if (matriz[i][j] != 0) {
+					aristas.add(new Grafo.Arista(i, j, matriz[i][j]));
+				}
+			}
+			accn++;
+		}
+			
+		return new Grafo(dirigido, aristas.toArray(new Grafo.Arista[aristas.size()]));
+	}
+	
 	public static void main(String[] args) {
 		boolean dirigido = false;
-		Grafo g = new Grafo(dirigido,
-							new Grafo.Arista(0, 1, 7),
-							new Grafo.Arista(0, 2, 9),
-							new Grafo.Arista(0, 5, 14),
-							new Grafo.Arista(1, 2, 10),
-							new Grafo.Arista(1, 3, 15),
-							new Grafo.Arista(2, 3, 11),
-							new Grafo.Arista(2, 5, 2),
-							new Grafo.Arista(3, 4, 6),
-							new Grafo.Arista(4, 5, 9));
-		
-		
+		Grafo g = generaGrafo(125, false, 11);
+
 		Par<int[], int[]> resultados = dijkstra(g, 0);
 		print(resultados);	
 	}
