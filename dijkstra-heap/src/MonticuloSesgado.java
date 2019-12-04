@@ -94,7 +94,7 @@ public class MonticuloSesgado {
 	public MonticuloSesgado(int... vs) {
 		tabla = new HashMap<>();
 		for (int v : vs) {
-			insertar(tam++, v);
+			insertar(tam, v);
 		}
 	}
 	
@@ -143,18 +143,19 @@ public class MonticuloSesgado {
         if (n2 == null) 
             return n1; 
         
-        Nodo nodo = null;
         if (n1._valor < n2._valor) {
-        	nodo = new Nodo(unir(n1.der, n2), n1._clave, n1._valor, n1.izq);
-        	nodo.padre = n1.padre;
+        	Nodo izq = n1.izq;
+        	n1.izq = unir(n2, n1.der);
+        	n1.izq.padre = n1;
+        	n1.der = izq;
+        	return n1;
         } else {
-        	nodo = new Nodo(unir(n2.der, n1), n2._clave, n2._valor, n2.izq);
-        	nodo.padre = n2.padre;
-        }
-        		 
-        nodo.izq.padre = nodo; 
-        	
-        return nodo;
+        	Nodo izq = n2.izq;
+        	n2.izq = unir(n1, n2.der);
+        	n2.izq.padre = n2;
+        	n2.der = izq;
+        	return n2;
+        } 
     } 
 	
 
@@ -163,48 +164,22 @@ public class MonticuloSesgado {
 		if (nodo == null) {
 			throw new IllegalAccessException("no hay nodo almacenado con clave " + clave);
 		}
-		
 		if (valor >= nodo._valor) return;
-
-		if (nodo._clave == raiz._clave) {
-			raiz._valor = valor;
+		
+		nodo._valor = valor;
+		if (nodo == raiz) {			// decrecer la raiz no supone problemas
 			return;
 		}
-		nodo._valor = valor;
 		
-		while (nodo.padre != null && nodo._valor < nodo.padre._valor) {
-			Nodo izq = nodo.izq;
-			Nodo der = nodo.der;
-			Nodo padre = nodo.padre;
-			
-			if (nodo == padre.izq) {
-				nodo.izq = padre;
-				nodo.der = padre.der;
-				nodo.padre = padre.padre;
-				if (nodo.der != null) {
-					nodo.der.padre = nodo;
-				}
-			} else {
-				nodo.der = nodo.padre;
-				nodo.izq = nodo.padre.izq;
-				nodo.padre = nodo.padre.padre;
-				if (nodo.izq != null) {
-					nodo.izq.padre = nodo;
-				}
-			}
-			
-			if (padre.padre.izq == padre) {
-				padre.padre.izq = nodo;
-			} else {
-				padre.padre.der = nodo;
-			}
-			padre.padre = nodo;
-			padre.izq = izq;
-			padre.der = der;
-			if(raiz == padre) {
-				raiz = padre.padre;
-			}
+		Nodo padre = nodo.padre;	// guardar puntero a padre
+		nodo.padre = null;			// cortar padre del nodo
+		if (nodo == padre.izq) {	// cortar nodo del padre
+			padre.izq = null;
+		} else {
+			padre.der = null;
 		}
+		
+		raiz = unir(nodo, raiz);
 	}
 	
 	

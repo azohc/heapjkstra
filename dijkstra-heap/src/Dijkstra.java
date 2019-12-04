@@ -94,21 +94,21 @@ public class Dijkstra {
 		List<Grafo.Arista> aristas = new ArrayList<>();
 		
 		Random r = new Random(semilla);
-
-		for (int i = 0; i < n; i++) {
-			for (int j = 0; j < n; j++) {
-				matriz[i][j] = r.nextInt(100);
-				if (matriz[i][j] <= 10) {
-					matriz[i][j] = 0;
-				}
-			}
-		}
-
+		
 		/*
 		 * Para grafos dirigidos, hay que recorrer n*n vertices para crear las aristas
 		 * Para grafos normales, solo hay que recorrer la mitad inferior a la diagonal (accn)
 		 */
 		int accn = 0;
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < (dirigido ? n : accn); j++) {
+				matriz[i][j] = r.nextInt(100);
+				if (matriz[i][j] > 50) {	// reducir el numero de aristas	
+					matriz[i][j] = 0;		// coste > 50 == no es arista
+				}
+			}
+		}
+		accn = 0;
 		for (int i = 0; i < n; i++) {
 			for (int j = 0; j < (dirigido ? n : accn); j++) {
 				if (matriz[i][j] != 0) {
@@ -123,8 +123,8 @@ public class Dijkstra {
 	
 	public static void main(String[] args) {
 		boolean dirigido = false;
-		Grafo g = generaGrafo(125, false, 11);
-
+		Grafo g = generaGrafo(118, false, 11);
+		
 		Par<int[], int[]> resultados = dijkstra(g, 0);
 		print(resultados);	
 	}
