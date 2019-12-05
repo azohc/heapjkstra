@@ -107,6 +107,7 @@ public class Dijkstra {
 					matriz[i][j] = 0;		// coste > 50 == no es arista
 				}
 			}
+			accn++;
 		}
 		accn = 0;
 		for (int i = 0; i < n; i++) {
@@ -123,7 +124,9 @@ public class Dijkstra {
 	
 	public static void main(String[] args) {
 		boolean dirigido = false;
-		Grafo g = generaGrafo(118, false, 11);
+		int V = 11;
+		long semilla = 11;
+		Grafo g = generaGrafo(V, dirigido, semilla);
 		
 		Par<int[], int[]> resultados = dijkstra(g, 0);
 		print(resultados);	
