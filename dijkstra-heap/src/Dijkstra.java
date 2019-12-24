@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
@@ -37,18 +38,19 @@ public class Dijkstra {
 		while (!Q.vacio()) {
 			Par<Integer, Integer> pmin = Q.min(); 
 			Q.borrarMin();
-			j = pmin.fst; 
-			int distMin = pmin.snd;
+			j = pmin.fst; 				// j = clave del nodo siendo visitado actualmente
+			int costeMin = pmin.snd;	// costeMin = coste minimo a j
 			
 			List<Par<Integer, Integer>> js = g.ady.get(j);
 			for (k = 0; k < js.size(); k++) {
-				int vk = js.get(k).fst;
-				int ncoste = distMin + coste(g, j, vk); 
-				if (ncoste < d[vk]) {
-					d[vk] = ncoste;
+				int vk = js.get(k).fst;		// vk = clave de nodo adyacente a j
+				// calcular coste nuevo de vk (pasando por j)
+				int nuevoCoste = costeMin == indefinido ? coste(g, j, vk) : costeMin + coste(g, j, vk); 
+				if (nuevoCoste < d[vk]) {	// actualizar variables si es mejor
+					d[vk] = nuevoCoste;
 					p[vk] = j;
 					try {
-						Q.decrecerClave(vk, ncoste);
+						Q.decrecerClave(vk, nuevoCoste);
 					} catch (IllegalAccessException e) {
 						e.printStackTrace();
 					}
@@ -102,8 +104,8 @@ public class Dijkstra {
 		int accn = 0;
 		for (int i = 0; i < n; i++) {
 			for (int j = 0; j < (dirigido ? n : accn); j++) {
-				matriz[i][j] = r.nextInt(100);
-				if (matriz[i][j] > 50) {	// reducir el numero de aristas	
+				matriz[i][j] = r.nextInt(150);
+				if (matriz[i][j] > 50) {	// para reducir el numero de aristas	
 					matriz[i][j] = 0;		// coste > 50 == no es arista
 				}
 			}
@@ -119,17 +121,25 @@ public class Dijkstra {
 			accn++;
 		}
 			
-		return new Grafo(dirigido, aristas.toArray(new Grafo.Arista[aristas.size()]));
+		return new Grafo(dirigido, n, aristas.toArray(new Grafo.Arista[aristas.size()]));
 	}
 	
-	public static void main(String[] args) {
-		boolean dirigido = false;
-		int V = 11;
+	public static void main(String[] args) throws IOException {
+		boolean dirigido = true;
+		int V = 20;
 		long semilla = 11;
-		Grafo g = generaGrafo(V, dirigido, semilla);
-		
-		Par<int[], int[]> resultados = dijkstra(g, 0);
-		print(resultados);	
+
+		for (int i = 0; i < 4; i++) {
+			
+			Grafo g = generaGrafo(V, dirigido, semilla + i);
+			long t1 = System.nanoTime();
+			
+			Par<int[], int[]> resultados = dijkstra(g, 0);
+			
+			long t2 = System.nanoTime();
+			System.out.println((t2 - t1) / 1000.0f + " ms"); // milisegundos
+		}
+//		print(resultados);	
 	}
 
 }

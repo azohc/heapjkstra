@@ -45,7 +45,7 @@ public class Grafo {
 	 * Dado un booleano y una o mas aristas, construye un grafo normal o dirigido representado por listas de adyacencia
 	 * Las aristas deben contener indices menores que el numero total de vertices
 	 */
-	public Grafo(boolean dirigido, Arista... aristas) {
+	public Grafo(boolean dirigido, int n, Arista... aristas) {
 		HashSet<Integer> s = new HashSet<>();
 		for (Arista a : aristas) {
 			if (!s.contains(a.orig)) {
@@ -56,7 +56,6 @@ public class Grafo {
 			}
 		}
 		
-		final int n = s.size();
 		ady = new ArrayList<>(n);
 		
 		for (int i = 0; i < n; i++) {

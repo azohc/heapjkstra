@@ -3,4 +3,8 @@ class Par<T, U> {
 	public Par(T f, U s) {
 		fst = f; snd = s;
 	}
+	@Override
+	public String toString() {
+		return "(" + fst + ", " + snd + ")";
+	}
 }
