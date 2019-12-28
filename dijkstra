@@ -1,0 +1,8 @@
+#! /bin/bash
+
+cd dijkstra-heap/src
+
+rm *.class # limpiar compilaciones anteriores
+javac -cp ../commons-cli-1.4/commons-cli-1.4.jar *
+java -cp :../commons-cli-1.4/commons-cli-1.4.jar Dijkstra $@
+
