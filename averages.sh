@@ -1,6 +1,5 @@
 #! /bin/bash
-cd tiempos
-for file in $("ls");
+for file in $("ls tiempos");
 do
     for line in $("cat $file");
     do
