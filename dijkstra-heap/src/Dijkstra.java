@@ -162,7 +162,7 @@ public class Dijkstra {
 		CommandLineParser parser = new DefaultParser();
 		try {
 			CommandLine cmd = parser.parse(options, args);
-			if (cmd.hasOption("h") || cmd.hasOption("help")) {
+			if (cmd.hasOption("h")) {
 				formatter.printHelp("dijkstra -n VS [OPTION...] \n" + 
 						"algoritmo de dijkstra de caminos mínimos\n" + 
 						"genera un grafo de VS vértices forma aleatoria. imprime el tiempo transcurrido en ejecutar el algoritmo de dijkstra\n" + 
@@ -176,7 +176,7 @@ public class Dijkstra {
 				return;
 			}
 			if (!cmd.hasOption("n") || cmd.getOptionValue("n") == null) {
-				System.out.println("error: no se ha especificado el número de vértices. (dijkstra -h para mostrar ayuda)");
+				System.out.println("error: no se ha especificado el numero de vertices. (dijkstra -h para mostrar ayuda)");
 				return;
 			}
 			V = Integer.parseInt(cmd.getOptionValue("n"));

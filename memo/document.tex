@@ -1,0 +1,26 @@
+\documentclass[12pt , a4paper]{article}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
+
+\title{Práctica MARP\\Algorítmo de dijkstra con montículo sesgado}
+\author{Juan Chozas Sumbera}
+
+\begin{document}
+	
+	\maketitle
+	\begin{center}
+		\includegraphics[width=\textwidth]{logo_UCM.jpg}
+	\end{center}
+	
+	\newpage
+	
+\section{Implementación}
+	
+	He elegido Java como lenguaje para variar, ya que el año pasado hice las dos prácticas en C++. Para representar grafos he elegido la representación mediante listas de adyacencia, que contienen de pares de enteros para almacenar el vértice adyacente y el coste de la arista.
+	
+	Para el montículo sesgado se almacena un entero (tamaño), un nodo (raíz), y una tabla (clave: entero, valor: nodo). La inclusión de la operación \textit{decrecerClave} trae la necesidad de almacenar y mantener la tabla que almacena todos los nodos del montículo. Un nodo almacena un puntero a su nodo padre, además de a sus dos hijos. Para una implementación eficiente de \textit{decrecerClave}, uso el puntero al padre del nodo objetivo para \textit{cortar} el nodo objetivo del padre (en caso de que la clave decrecida sea menor que la del padre).
+	
+	Incluyo también un script llamado \textit{dijkstra} que puede usarse para compilar y ejecutar el programa. Admite varios argumentos, de los cuales solo es obligatorio \textbf{\textit{-n NUM}}, usado para generar \textit{\textbf{NUM}} nodos.  Los grafos usados para probar el algoritmo se crearon de forma aleatoria, y se puede elegir la semilla con la opción \textbf{\textit{-s SEED}}. La opción \textbf{\textit{-h}} proporciona más información acerca de las opciones.
+\end{document}

@@ -46,8 +46,8 @@ public class Grafo {
 	 * Las aristas deben contener indices menores que el numero total de vertices
 	 */
 	public Grafo(boolean dirigido, int n, Arista... aristas) {
-		HashSet<Integer> s = new HashSet<>();
-		for (Arista a : aristas) {
+		HashSet<Integer> s = new HashSet<>();	
+		for (Arista a : aristas) {		// evitar vertices repetidos
 			if (!s.contains(a.orig)) {
 				s.add(a.orig);
 			}
@@ -58,12 +58,12 @@ public class Grafo {
 		
 		ady = new ArrayList<>(n);
 		
-		for (int i = 0; i < n; i++) {
+		for (int i = 0; i < n; i++) {	// inicializacion de n listas de pares
 			ady.add(i, new ArrayList<Par<Integer, Integer>>());
 		}
 		
 		for (Arista a : aristas) {
-			if (a.orig >= n || a.dest >= n) 
+			if (a.orig >= n || a.dest >= n) // conjunto de vertices = [0..n), donde n es la cantidad de vertices
 				throw new IndexOutOfBoundsException(
 						"No se admiten aristas que conecten vertices con indice mayor o igual el numero total de vertices");
 			

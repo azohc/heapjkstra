@@ -16,26 +16,11 @@ class Nodo {
 	
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 	
-	public Nodo(Nodo n) {
-		_clave = n._clave; _valor = n._valor;
-		if (n.izq != null) 		izq = new Nodo(n.izq); 
-		if (n.der != null) 		der = new Nodo(n.der);
-	}
-	
-	
 	public Nodo(int clave, int valor) { 
 		_clave = clave; 
 		_valor = valor; 
 	}
-	
-	
-	public Nodo(Nodo i, int clave, int valor, Nodo d) { 
-		_clave = clave; 
-		_valor = valor; 
-		izq = i; 
-		der = d; 
-	}
-	
+		
 	@Override
 	public String toString() {
 		if (izq == null && der == null)
@@ -51,20 +36,18 @@ class Nodo {
 		}
 	}
 	
-	
+	// recorridos
 	public void preorden(boolean claves) {
 		claveValor(claves);
 		if (izq != null) izq.preorden(claves);	
 		if (der != null) der.preorden(claves);
 	}
 	
-	
 	public void inorden(boolean claves) {
 		if (izq != null) izq.inorden(claves);	
 		claveValor(claves);
 		if (der != null) der.inorden(claves);
 	}
-	
 	
 	public void postorden(boolean claves) {
 		if (izq != null) izq.postorden(claves);	
