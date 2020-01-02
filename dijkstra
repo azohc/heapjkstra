@@ -1,8 +1,8 @@
 #! /bin/bash
+# script para compilar el programa y ejecutarlo
+# utilizar ./dijksta -h para ver las opciones disponibles
 
 cd dijkstra-heap/src
-
-rm *.class # limpiar compilaciones anteriores
+rm *.class
 javac -cp ../commons-cli-1.4/commons-cli-1.4.jar *
-java -cp :../commons-cli-1.4/commons-cli-1.4.jar Dijkstra $@
-
+java -cp :../commons-cli-1.4/commons-cli-1.4.jar Dijkstra $@ 
