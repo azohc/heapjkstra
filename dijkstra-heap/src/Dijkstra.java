@@ -19,6 +19,17 @@ import org.apache.commons.cli.ParseException;
 	
 public class Dijkstra {
 	
+	private static final String HELP = "dijkstra -n VS [OPTION...] \n" + 
+			"algoritmo de dijkstra de caminos minimos\n" + 
+			"genera un grafo de VS vertices forma aleatoria. imprime el tiempo transcurrido en ejecutar el algoritmo de dijkstra\n" + 
+			"\n" + 
+			"Ejemplos:\n" + 
+			"  dijkstra -t 1                # ejecuta el caso de prueba 1" +		
+			"  dijkstra -n 100 -d  			# genera un grafo dirigido de 100 vertices.\n" + 
+			"  dijkstra -n 10 -r			# genera un grafo de 10 vertices e imprime los resultados.\n" + 
+			"  dijkstra -n 10 -s 50			# genera un grafo de 10 vertices. usa 50 como semilla para el objeto Random.\n" +
+			"  dijkstra -n 10 -u 60			# genera un grafo de 10 vertices. el 60% de las aristas generadas se borraran.\n" +
+			"\n";
 	private final static int indefinido = Integer.MAX_VALUE;
 	
 	/**
@@ -141,15 +152,7 @@ public class Dijkstra {
 	public static void main(String[] args) throws IOException {
 		Options options = new Options();
 		HelpFormatter formatter = new HelpFormatter();
-		options.addOption("d", false, "generar un grafo dirigido");
-		options.addOption("a", false, "imprimir numero de aristas generadas");
-		options.addOption("r", false, "imprimir resultados del algoritmo");
-		options.addOption("i", true, "numero de veces que se ejecuta el algoritmo");
-		options.addOption("n", true, "cantidad de vértices en el grafo");
-		options.addOption("s", true, "semilla para objeto Random");
-		options.addOption("u", true, "porcentage de aristas generadas que se eliminarán");
-		options.addOption("h", false, "imprimir este mensaje");
-
+		crearOpciones(options);
 		
 		String aux;
 		boolean dirigido = false;
@@ -162,17 +165,15 @@ public class Dijkstra {
 		try {
 			CommandLine cmd = parser.parse(options, args);
 			if (cmd.hasOption("h")) {
-				formatter.printHelp("dijkstra -n VS [OPTION...] \n" + 
-						"algoritmo de dijkstra de caminos mínimos\n" + 
-						"genera un grafo de VS vértices forma aleatoria. imprime el tiempo transcurrido en ejecutar el algoritmo de dijkstra\n" + 
-						"\n" + 
-						"Ejemplos:\n" + 
-						"  dijkstra -n 100 -d  			# genera un grafo dirigido de 100 vértices.\n" + 
-						"  dijkstra -n 10 -r			# genera un grafo de 10 vértices e imprime los resultados.\n" + 
-						"  dijkstra -n 10 -s 50			# genera un grafo de 10 vertices. usa 50 como semilla para el objeto Random.\n" +
-						"  dijkstra -n 10 -u 60			# genera un grafo de 10 vertices. el 60% de las aristas generadas se borrarán.\n" +
-						"\n", options);
+				formatter.printHelp(HELP, options);
 				return;
+			}
+			if (cmd.hasOption("t")) {
+				if (cmd.getOptionValue("t") == null) {
+					System.out.println("error: no se ha especificado el caso de prueba. (puede ser 1 o 2)");
+				} else {
+					ejecutarPrueba(Integer.parseInt(cmd.getOptionValue("t")));
+				}
 			}
 			if (!cmd.hasOption("n") || cmd.getOptionValue("n") == null) {
 				System.out.println("error: no se ha especificado el numero de vertices. (dijkstra -h para mostrar ayuda)");
@@ -218,6 +219,63 @@ public class Dijkstra {
 		}
 	}
 
+	private static void ejecutarPrueba(int prueba) {
+		if (prueba == 1) {
+			Grafo g = new Grafo(true, 6,
+                    new Grafo.Arista(0, 1, 7),
+                    new Grafo.Arista(0, 2, 9),
+                    new Grafo.Arista(0, 5, 14),
+                    new Grafo.Arista(1, 2, 10),
+                    new Grafo.Arista(1, 3, 15),
+                    new Grafo.Arista(2, 3, 11),
+                    new Grafo.Arista(2, 5, 2),
+                    new Grafo.Arista(3, 4, 6),
+                    new Grafo.Arista(4, 5, 9));
+	
+			Par<int[], int[]> resultados;
+			long t1 = System.nanoTime();
+			resultados = dijkstra(g, 0);
+			long t2 = System.nanoTime();
+			System.out.println((t2 - t1) / 1000.0f); // milisegundos
+			print(resultados);
+		} else if (prueba == 2) {
+			Grafo g = new Grafo(false, 6,
+                    new Grafo.Arista(0, 1, 3),
+                    new Grafo.Arista(0, 2, 5),
+                    new Grafo.Arista(0, 3, 9),
+                    new Grafo.Arista(1, 3, 4),
+                    new Grafo.Arista(1, 2, 3),
+                    new Grafo.Arista(1, 4, 7),
+                    new Grafo.Arista(2, 3, 2),
+                    new Grafo.Arista(2, 4, 6),
+                    new Grafo.Arista(2, 5, 8),
+                    new Grafo.Arista(2, 4, 6),
+                    new Grafo.Arista(3, 4, 2),
+                    new Grafo.Arista(3, 5, 2),
+                    new Grafo.Arista(4, 5, 5));
+	
+			Par<int[], int[]> resultados;
+			long t1 = System.nanoTime();
+			resultados = dijkstra(g, 0);
+			long t2 = System.nanoTime();
+			System.out.println((t2 - t1) / 1000.0f); // milisegundos
+			print(resultados);
+		} else {
+			System.out.println("error: caso de prueba invalido. (puede ser 1 o 2)");
+		}
+	}
+	
+	private static void crearOpciones(Options options) {
+		options.addOption("a", false, "imprimir numero de aristas generadas");
+		options.addOption("d", false, "generar un grafo dirigido");
+		options.addOption("h", false, "imprimir este mensaje");
+		options.addOption("i", true, "numero de veces que se ejecuta el algoritmo");
+		options.addOption("n", true, "cantidad de v�rtices en el grafo");
+		options.addOption("r", false, "imprimir resultados del algoritmo");
+		options.addOption("s", true, "semilla para objeto Random");
+		options.addOption("t", true, "ejecutar un caso de prueba");
+		options.addOption("u", true, "porcentage de aristas generadas que se eliminar�n");
+	}
 }
 	
 	

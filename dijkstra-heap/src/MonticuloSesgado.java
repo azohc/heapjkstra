@@ -20,7 +20,7 @@ class Nodo {
 		_clave = clave; 
 		_valor = valor; 
 	}
-		
+	
 	@Override
 	public String toString() {
 		if (izq == null && der == null)
