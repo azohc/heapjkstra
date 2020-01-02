@@ -97,11 +97,11 @@ public class Dijkstra {
 
 	/*
 	 * Genera un grafo de n vertices creando aristas con costes aleatorios
+	 * devuelve el grafo y el numero de aristas que contiene
 	 */
-	static Grafo generaGrafo(int n, boolean dirigido, long semilla, int umbral) {
+	static Par<Grafo, Integer> generaGrafo(int n, boolean dirigido, long semilla, int umbral) {
 		int[][] matriz = new int[n][n];
 		List<Grafo.Arista> aristas = new ArrayList<>();
-		
 		Random r = new Random(semilla);
 		
 		/*
@@ -128,7 +128,7 @@ public class Dijkstra {
 			accn++;
 		}
 			
-		return new Grafo(dirigido, n, aristas.toArray(new Grafo.Arista[aristas.size()]));
+		return new Par<Grafo, Integer>(new Grafo(dirigido, n, aristas.toArray(new Grafo.Arista[aristas.size()])), aristas.size());
 	}
 
 	
@@ -143,6 +143,7 @@ public class Dijkstra {
 		Options options = new Options();
 		HelpFormatter formatter = new HelpFormatter();
 		options.addOption("d", false, "generar un grafo dirigido");
+		options.addOption("a", false, "imprimir numero de aristas generadas");
 		options.addOption("r", false, "imprimir resultados del algoritmo");
 		options.addOption("i", true, "numero de veces que se ejecuta el algoritmo");
 		options.addOption("n", true, "cantidad de vértices en el grafo");
@@ -198,15 +199,20 @@ public class Dijkstra {
 					iteraciones = Integer.parseInt(aux); 
 				}
 			}
-			Grafo g = generaGrafo(V, dirigido, semilla, umbral);
-			for (int i = 0; i < iteraciones; i++) {				
+			Par<Grafo, Integer> grafoGenerado = generaGrafo(V, dirigido, semilla, umbral); 
+			Grafo g = grafoGenerado.fst;
+			Par<int[], int[]> resultados = new Par<int[], int[]>();
+			if (cmd.hasOption("a")) {	// imprimir numero de aristas
+				System.out.println(grafoGenerado.snd);
+			}
+			for (int i = 0; i < iteraciones; i++) {	// solo medir e imprimir tiempo del algoritmo				
 				long t1 = System.nanoTime();
-				Par<int[], int[]> resultados = dijkstra(g, 0);
+				resultados = dijkstra(g, 0);
 				long t2 = System.nanoTime();
 				System.out.println((t2 - t1) / 1000.0f); // milisegundos
-				if (cmd.hasOption("r")) {
-					print(resultados);				
-				}
+			}
+			if (cmd.hasOption("r")) {	// imprimir tabla de resultados
+				print(resultados);				
 			}
 		} catch (ParseException e) {
 	        System.err.println("error de parseo: " + e.getMessage());

@@ -6,7 +6,7 @@ do
     for line in $(cat tiempos/$file);
     do
     	if $first; then
-            echo "$file $line"
+            echo "$file $(awk '{print ($1+$2)*log($2)}' <<< "${line} ${file}")"
 		fi
         break
     done
