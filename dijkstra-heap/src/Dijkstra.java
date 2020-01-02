@@ -220,8 +220,8 @@ public class Dijkstra {
 	}
 
 	private static void ejecutarPrueba(int prueba) {
-		if (prueba == 1) {
-			Grafo g = new Grafo(true, 6,
+		if (prueba == 1) {	
+			Grafo g = new Grafo(false, 6,	// no dirigido
                     new Grafo.Arista(0, 1, 7),
                     new Grafo.Arista(0, 2, 9),
                     new Grafo.Arista(0, 5, 14),
@@ -239,20 +239,14 @@ public class Dijkstra {
 			System.out.println((t2 - t1) / 1000.0f); // milisegundos
 			print(resultados);
 		} else if (prueba == 2) {
-			Grafo g = new Grafo(false, 6,
-                    new Grafo.Arista(0, 1, 3),
-                    new Grafo.Arista(0, 2, 5),
-                    new Grafo.Arista(0, 3, 9),
-                    new Grafo.Arista(1, 3, 4),
-                    new Grafo.Arista(1, 2, 3),
-                    new Grafo.Arista(1, 4, 7),
-                    new Grafo.Arista(2, 3, 2),
-                    new Grafo.Arista(2, 4, 6),
-                    new Grafo.Arista(2, 5, 8),
-                    new Grafo.Arista(2, 4, 6),
-                    new Grafo.Arista(3, 4, 2),
-                    new Grafo.Arista(3, 5, 2),
-                    new Grafo.Arista(4, 5, 5));
+			Grafo g = new Grafo(true, 5,
+                    new Grafo.Arista(0, 1, 10),
+                    new Grafo.Arista(0, 4, 3),
+                    new Grafo.Arista(1, 4, 1),
+                    new Grafo.Arista(1, 2, 5),
+                    new Grafo.Arista(2, 4, 8),
+                    new Grafo.Arista(2, 3, 7),
+                    new Grafo.Arista(3, 4, 2));
 	
 			Par<int[], int[]> resultados;
 			long t1 = System.nanoTime();
