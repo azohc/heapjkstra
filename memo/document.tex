@@ -4,6 +4,8 @@
 \usepackage{graphicx}
 \graphicspath{ {./images/} }
 
+
+
 \title{Práctica MARP\\Algorítmo de dijkstra con montículo sesgado}
 \author{Juan Chozas Sumbera}
 
@@ -23,5 +25,43 @@
 	Para el montículo sesgado se almacena un entero (tamaño), un nodo (raíz), y una tabla (clave: entero, valor: nodo). La inclusión de la operación \textit{decrecerClave} trae la necesidad de almacenar y mantener la tabla que almacena todos los nodos del montículo. Un nodo almacena un puntero a su nodo padre, además de a sus dos hijos. Para una implementación eficiente de \textit{decrecerClave}, uso el puntero al padre del nodo objetivo para \textit{cortar} el nodo objetivo del padre (en caso de que la clave decrecida sea menor que la del padre).
 	
 \section{Ejecución}
-	Incluyo también un script llamado \textit{dijkstra} que puede usarse para compilar y ejecutar el programa. Admite varios argumentos, de los cuales solo es obligatorio \textit{-n NUM}, usado para generar un grafo de \textit{NUM} nodos. Se puede omitir este argumento en caso de usar la opción \textit{-t 1} o \textit{-t 2}, que ordena la ejecución de uno de los casos de prueba. Los grafos usados para probar el algoritmo se crearon de forma aleatoria, y se puede elegir la semilla con la opción \textit{-s SEM}. La opción \textit{-h} proporciona más información acerca de las opciones.
+	Incluyo también un script llamado \texttt{dijkstra} que puede usarse para compilar y ejecutar el programa. Admite varios argumentos, de los cuales solo es obligatorio \texttt{-n NUM}, usado para generar un grafo de \texttt{NUM} nodos. Se puede omitir este argumento en caso de usar la opción \texttt{-t 1} o \texttt{-t 2}, que ordena la ejecución de uno de los casos de prueba. Los grafos usados para probar el algoritmo se crearon de forma aleatoria, y se puede elegir la semilla con la opción \texttt{-s SEM}. La opción \texttt{-h} proporciona más información acerca de las opciones.
+	
+
+\section{Medición}
+\subsection{Métodos empleados}
+	El grafo se genera de antemano, y el vértice inicial siempre es el 0. Los tiempos se han medido usando la función \texttt{System.nanoTime()} midiéndose únicamente el tiempo transcurrido durante la ejecución del algoritmo de la siguiente forma:
+	\begin{verbatim}
+	long t1 = System.nanoTime();
+	resultados = dijkstra(g, 0);
+	long t2 = System.nanoTime();
+	\end{verbatim}
+	
+	La máquina usada durante la medición siempre estaba cargando. El sistema operativo que usa es Ubuntu 18.04, y todas las ejecuciones se realizaron en terminales \texttt{tty}. Desactivé la conexión de la máquina a Internet con las instrucciones \texttt{ip link set wlp2s0 down} y \texttt{service network-manager stop}. Las ejecuciones se hicieron usando los siguientes instrucciones:
+	\begin{verbatim}
+	for i in `seq 5 5 100`; do 
+	    ./dijkstra -n $i -a -d -i 6 > tiempos/$i; 
+	done
+	for i in `seq 125 25 1000`; do 
+	   ./dijkstra -n $i -a -d -i 6 > tiempos/$i;
+	do ne
+	for i in `seq 1050 50 5000`; do 
+	    ./dijkstra -n $i -a -d -i 6 > tiempos/$i; 
+	done
+	\end{verbatim}
+	A partir de 5000 nodos, saltaban excepciones relacionadas al límite de memoria. Las opciones indican
+	\begin{itemize}
+		\item el número de nodos (\texttt{-n \$i})
+		\item que se imprima el número de aristas generadas (\texttt{-a})
+		\item que el grafo generado sea dirigido (\texttt{-d})
+		\item que se ejecute el algoritmo 6 veces (\texttt{-i 6})
+	\end{itemize} 
+	La última opción resulta en 6 medidas distintas, de las cuales la primera siempre tenía un valor mucho más elevado al resto. En la siguiente sección aparecen gráficas que descartan esta primera medida en el cálculo de la media, y otras que la incluyen. También hay gráficas de grafos no dirigidos para los mismos rangos de vértices (mismas instrucciones pero sin la opción \texttt{-d}).
+	
+	Finalmente, procesé las medidas en la carpeta \texttt{tiempos} con dos scripts, \texttt{averages.sh} y \texttt{edges.sh}, con el fin de calcular las medias de las medidas y \texttt{(a + n)*log(n)} respectivamente.
+	
+\section{Resultados}
+
+
+
 \end{document}

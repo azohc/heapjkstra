@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7250 64-bit) (preloaded format=pdflatex 2019.11.28)  2 JAN 2020 21:03
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7250 64-bit) (preloaded format=pdflatex 2019.11.28)  3 JAN 2020 10:13
 entering extended mode
 **./document.tex
 (document.tex
@@ -93,20 +93,20 @@ LaTeX Info: Redefining \% on input line 7.
 )
 \openout1 = `document.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 10.
-LaTeX Font Info:    ... okay on input line 10.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 10.
-LaTeX Font Info:    ... okay on input line 10.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 10.
-LaTeX Font Info:    ... okay on input line 10.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 10.
-LaTeX Font Info:    ... okay on input line 10.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 10.
-LaTeX Font Info:    ... okay on input line 10.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 10.
-LaTeX Font Info:    ... okay on input line 10.
-LaTeX Info: Redefining \. on input line 10.
-LaTeX Info: Redefining \% on input line 10.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Info: Redefining \. on input line 12.
+LaTeX Info: Redefining \% on input line 12.
 
 ("C:\Users\wozas\AppData\Local\Programs\MiKTeX 2.9\tex/context/base/mkii\supp-p
 df.mkii"
@@ -183,37 +183,38 @@ G,.JBIG2,.JB2,.eps]
 (grfext)             \AppendGraphicsExtensions on input line 456.
 )
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <14.4> on input line 12.
+(Font)              <14.4> on input line 14.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 12.
+(Font)              <7> on input line 14.
 <./images/logo_UCM.jpg, id=1, 1204.5pt x 881.2925pt>
 File: ./images/logo_UCM.jpg Graphic file (type jpg)
 <use ./images/logo_UCM.jpg>
-Package pdftex.def Info: ./images/logo_UCM.jpg  used on input line 14.
+Package pdftex.def Info: ./images/logo_UCM.jpg  used on input line 16.
 (pdftex.def)             Requested size: 390.0pt x 285.35432pt.
  [1
 
 {C:/Users/wozas/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map} <./images/lo
-go_UCM.jpg>] [2] (document.aux
+go_UCM.jpg>] [2] [3] (document.aux
 LaTeX Info: Redefining \. on input line 7.
 LaTeX Info: Redefining \% on input line 7.
 ) ) 
 Here is how much of TeX's memory you used:
- 2514 strings out of 492450
- 36461 string characters out of 3120004
- 113064 words of memory out of 3000000
- 6864 multiletter control sequences out of 15000+200000
- 6103 words of font info for 22 fonts, out of 3000000 for 9000
+ 2519 strings out of 492450
+ 36512 string characters out of 3120004
+ 114064 words of memory out of 3000000
+ 6868 multiletter control sequences out of 15000+200000
+ 6579 words of font info for 24 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  55i,6n,35p,626b,361s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Users/wozas/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfont
 s/cm/cmbx12.pfb><C:/Users/wozas/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/p
 ublic/amsfonts/cm/cmr12.pfb><C:/Users/wozas/AppData/Local/Programs/MiKTeX 2.9/f
 onts/type1/public/amsfonts/cm/cmr17.pfb><C:/Users/wozas/AppData/Local/Programs/
-MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti12.pfb>
-Output written on document.pdf (2 pages, 221258 bytes).
+MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti12.pfb><C:/Users/wozas/AppData/Lo
+cal/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
+Output written on document.pdf (3 pages, 233823 bytes).
 PDF statistics:
- 26 PDF objects out of 1000 (max. 8388607)
+ 33 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  6 words of extra memory for PDF output out of 10000 (max. 10000000)
 
