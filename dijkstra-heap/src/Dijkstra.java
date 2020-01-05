@@ -264,11 +264,11 @@ public class Dijkstra {
 		options.addOption("d", false, "generar un grafo dirigido");
 		options.addOption("h", false, "imprimir este mensaje");
 		options.addOption("i", true, "numero de veces que se ejecuta el algoritmo");
-		options.addOption("n", true, "cantidad de vÈrtices en el grafo");
+		options.addOption("n", true, "cantidad de v√©rtices en el grafo");
 		options.addOption("r", false, "imprimir resultados del algoritmo");
 		options.addOption("s", true, "semilla para objeto Random");
 		options.addOption("t", true, "ejecutar un caso de prueba");
-		options.addOption("u", true, "porcentage de aristas generadas que se eliminar·n");
+		options.addOption("u", true, "porcentage de aristas generadas que se eliminar√°n. default: 30");
 	}
 }
 	
