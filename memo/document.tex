@@ -39,19 +39,19 @@
 	
 	La máquina usada durante la medición siempre estaba enchufada a la corriente. El sistema operativo que usa es Ubuntu 18.04, y todas las ejecuciones se realizaron en terminales \texttt{tty}. Desactivé la conexión de la máquina a Internet con las instrucciones \texttt{ip link set wlp2s0 down} y \texttt{service network-manager stop}. Las ejecuciones se hicieron usando los siguientes instrucciones:
 	\begin{verbatim}
-	for i in `seq 5 5 100`; do 
-	    ./dijkstra -n $i -a -d -i 6 > tiempos/$i; 
+	for N in `seq 5 5 100`; do 
+	    ./dijkstra -n $N -a -d -i 6 > tiempos/$N; 
 	done
-	for i in `seq 125 25 1000`; do 
-	   ./dijkstra -n $i -a -d -i 6 > tiempos/$i;
+	for N in `seq 125 25 1000`; do 
+	   ./dijkstra -n $N -a -d -i 6 > tiempos/$N;
 	do ne
-	for i in `seq 1050 50 5000`; do 
-	    ./dijkstra -n $i -a -d -i 6 > tiempos/$i; 
+	for N in `seq 1050 50 5000`; do 
+	    ./dijkstra -n $N -a -d -i 6 > tiempos/$N; 
 	done
 	\end{verbatim}
 	A partir de 5000 nodos, saltaban excepciones relacionadas al límite de memoria. Las opciones indican
 	\begin{itemize}
-		\item el número de nodos (\texttt{-n \$i})
+		\item el número de nodos (\texttt{-n \$N})
 		\item que se imprima el número de aristas generadas (\texttt{-a})
 		\item que el grafo generado sea dirigido (\texttt{-d})
 		\item que se ejecute el algoritmo 6 veces (\texttt{-i 6})
@@ -63,25 +63,31 @@
 
 \section{Resultados}
 
-	A continuación aparecen las gráficas. Las dos primeras no tienen en cuenta la primera ejecución. El valor del primero tiempo leído era mucho mayor que el del resto, que no variaba mucho de uno a otro. Esto lo pude comprobar observando el comportamiento en un número alto de iteraciones con la opción \texttt{-i}. No veo una explicación a esto, por lo tanto las dos primeras gráficas omiten el resultado.
+	A continuación aparecen las gráficas. De las 6 ejecuciones en cada numero de nodos probado, las dos primeras gráficas no tienen en cuenta la primera ejecución: el primer tiempo medido era mucho mayor que el del resto, que no variaba mucho de uno a otro. Esto lo pude comprobar observando el comportamiento en un número alto de iteraciones con la opción \texttt{-i}.
 	
 	\hspace*{-.15\linewidth}
 	\includegraphics[width=1.25\hsize]{dir5.png}
 	\texttt{Gráfica 1 - Grafos dirigidos sin tener en cuenta la primera medida}
-	La curva del tiempo es menos acentuada que la de la cota superior, pero la curva tiene la misma forma. Estimo que la curva de las medidas está en \texttt{z*(a+n)log(n)}, con \texttt{z} entre 0.3 y 0.5. Puede ser porque el algoritmo termina sin visitar todos los vértices: con grafos dirigidos es más probable que haya nodos inaccesibles por haber restricciones de dirección en las aristas. 
+	\newline
+	
+	La curva del tiempo es menos acentuada que la de la cota superior, pero la curva tiene la misma forma. Estimo que la curva de las medidas está en \texttt{z(a+n)log(n)}, con \texttt{z} entre 0.3 y 0.5. Puede ser porque el algoritmo termina sin visitar todos los vértices: con grafos dirigidos es más probable que haya nodos inaccesibles por haber restricciones de dirección en las aristas. 
 	
 	
 	\newpage
 	\hspace*{-.15\linewidth}
 	\includegraphics[width=1.25\hsize]{nodir5.png}
 	\texttt{Gráfica 2 - Grafos no dirigidos sin tener en cuenta la primera medida}
-	La curva de las medidas se asemeja más la curva de la cota superior que cuando los grafos son dirigidos. Estas medidas también parecen seguir la curva de la cota superior: diría que la curva es \texttt{z*(a+n)log(n)}, con \texttt{z} entre 0.5 y 0.7.  Yo creo que esto se debe al hecho de que hay más aristas que en un grafo dirigido, lo cual hace más probable que todos los nodos sean alcanzables. Es menos probable que el algoritmo termine sin haber visitado todos los nodos.
+	\newline	
+	
+	La curva de las medidas se asemeja más la curva de la cota superior que cuando los grafos son dirigidos. Estas medidas también parecen seguir la curva de la cota superior: diría que la curva es \texttt{z(a+n)log(n)}, con \texttt{z} entre 0.5 y 0.7.  Yo creo que esto se debe al hecho de que hay más aristas que en un grafo dirigido, lo cual hace más probable que todos los nodos sean alcanzables. Es menos probable que el algoritmo termine sin haber visitado todos los nodos.
 
 
 	\newpage
 	\hspace*{-.15\linewidth}
 	\includegraphics[width=1.25\hsize]{dir6.png}
 	\texttt{Gráfica 3 - Grafos dirigidos teniendo en cuenta la primera medida}
+	\newline
+	
 	Es muy similar a la gráfica 1. Algunos puntos suben y otros bajan, pero la diferencia es apenas notable.
 	
 	
@@ -89,6 +95,8 @@
 	\hspace*{-.15\linewidth}
 	\includegraphics[width=1.25\hsize]{nodir6.png}
 	\texttt{Gráfica 4 - Grafos no dirigidos teniendo en cuenta la primera medida}
+	\newline
+	
 	La inclusión de la primera medida es más notable en esta gráfica que en la 3: entre 2650 y 3000 nodos hay mucha más varianza que en la gráfica 2. Creo que se le puede echar la culpa a la máquina en este subconjunto de pruebas, pues todos los tiempos son mayores. Fuera de este pequeño rango, las medidas no son muy diferentes a las de la gráfica 2.
 	Comparando con la segunda gráfica, puedo concluir que para cada primera ejecución en el rango de nodos mencionado, el tiempo de medido es mucho más elevado al de las otras 5 ejecuciones. No sabría explicar por qué solo pasa en la primera ejecución, ni por qué hay tanta diferencia en este rango de nodos.
 
