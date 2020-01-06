@@ -20,22 +20,22 @@ import org.apache.commons.cli.ParseException;
 public class Dijkstra {
 	
 	private static final String HELP = "dijkstra -n VS [OPTION...] \n" + 
-			"algoritmo de dijkstra de caminos minimos\n" + 
-			"genera un grafo de VS vertices forma aleatoria. imprime el tiempo transcurrido en ejecutar el algoritmo de dijkstra\n" + 
+			"algoritmo de dijkstra de caminos mínimos\n" + 
+			"genera un grafo de VS vértices forma aleatoria. imprime el tiempo transcurrido en ejecutar el algoritmo de dijkstra\n" + 
 			"\n" + 
 			"Ejemplos:\n" + 
 			"  dijkstra -t 1                # ejecuta el caso de prueba 1" +		
-			"  dijkstra -n 100 -d  			# genera un grafo dirigido de 100 vertices.\n" + 
-			"  dijkstra -n 10 -r			# genera un grafo de 10 vertices e imprime los resultados.\n" + 
-			"  dijkstra -n 10 -s 50			# genera un grafo de 10 vertices. usa 50 como semilla para el objeto Random.\n" +
-			"  dijkstra -n 10 -u 60			# genera un grafo de 10 vertices. el 60% de las aristas generadas se borraran.\n" +
+			"  dijkstra -n 100 -d  			# genera un grafo dirigido de 100 vértices.\n" + 
+			"  dijkstra -n 10 -r			# genera un grafo de 10 vértices e imprime los resultados.\n" + 
+			"  dijkstra -n 10 -s 50			# genera un grafo de 10 vértices. usa 50 como semilla para el objeto Random.\n" +
+			"  dijkstra -n 10 -u 60			# genera un grafo de 10 vértices. el 60% de las aristas generadas se borrarán.\n" +
 			"\n";
 	private final static int indefinido = Integer.MAX_VALUE;
 	
 	/**
-	 * El algoritmo recibe un grafo G implementado con listas de adyacencia, y un vertice origen s.
-	 * Devuelve un vector d de distancias minimas desde s a cada vertice, y un vector p de predecesores que 
-	 * indica, para cada vertice k, cual es el vertice anterior a k en el camino minimo desde s hasta k. 
+	 * El algoritmo recibe un grafo G implementado con listas de adyacencia, y un vértice origen s.
+	 * Devuelve un vector d de distancias minimas desde s a cada vértice, y un vector p de predecesores que 
+	 * indica, para cada vértice k, cual es el vértice anterior a k en el camino mínimo desde s hasta k. 
 	 */
 	public static Par<int[], int[]> dijkstra(Grafo g, int s) {
 		int n = g.size();
@@ -56,7 +56,7 @@ public class Dijkstra {
 			Par<Integer, Integer> pmin = Q.min(); 
 			Q.borrarMin();
 			j = pmin.fst; 				// j = clave del nodo siendo visitado actualmente
-			int costeMin = pmin.snd;	// costeMin = coste minimo a j
+			int costeMin = pmin.snd;	// costeMin = coste mínimo a j
 			
 			List<Par<Integer, Integer>> js = g.ady.get(j);
 			for (k = 0; k < js.size(); k++) {
@@ -81,9 +81,9 @@ public class Dijkstra {
 	private static int coste(Grafo g, int orig, int dest) {
 		if (orig >= g.size() || dest >= g.size()) 
 			throw new IndexOutOfBoundsException(
-					"No se admiten aristas que conecten vertices con indice mayor o igual el numero total de vertices");
+					"No se admiten aristas que conecten vértices con indice mayor o igual el numero total de vértices");
 		
-		// para cada vertice <v', c> adyacente a orig
+		// para cada vértice <v', c> adyacente a orig
 		for (Par<Integer, Integer> par : g.ady.get(orig)) {
 			if (dest == par.fst) {	// si dest = v', existe arista orig -> dest
 				return par.snd;		// devolvemos el coste de la arista
@@ -94,7 +94,7 @@ public class Dijkstra {
 	}
 	
 	static void print(Par<int[], int[]> rs) {
-		System.out.println("vertice\tcoste\tvertice anterior");
+		System.out.println("vértice\tcoste\tvértice anterior");
 		for(int i = 0; i < rs.fst.length; i++) {
 			if (rs.fst[i] == Integer.MAX_VALUE) 
 				System.out.println(i + "\tinf\t" + rs.snd[i]);
@@ -106,7 +106,7 @@ public class Dijkstra {
 	}
 
 	/*
-	 * Genera un grafo de n vertices creando aristas con costes aleatorios
+	 * Genera un grafo de n vértices creando aristas con costes aleatorios
 	 * devuelve el grafo y el numero de aristas que contiene
 	 */
 	static Par<Grafo, Integer> generaGrafo(int n, boolean dirigido, long semilla, int umbral) {
@@ -115,7 +115,7 @@ public class Dijkstra {
 		Random r = new Random(semilla);
 		
 		/*
-		 * Para grafos dirigidos, hay que recorrer n*n vertices para crear las aristas
+		 * Para grafos dirigidos, hay que recorrer n*n vértices para crear las aristas
 		 * Para grafos normales, solo hay que recorrer la mitad inferior a la diagonal (accn)
 		 */
 		int accn = 0;
@@ -143,10 +143,10 @@ public class Dijkstra {
 
 	
 	/*
-	 * algoritmo de dijkstra para caminos minimos 
-	 * implementado con monticulo sesgado (con operacion decrecerClave)
+	 * algoritmo de dijkstra para caminos mínimos 
+	 * implementado con monticulo sesgado (con operación decrecerClave)
 	 * 
-	 * paraemtros: -d 
+	 * parámtros: -d 
 	 * grafo dirigido o no
 	 */
 	public static void main(String[] args) throws IOException {
@@ -176,7 +176,7 @@ public class Dijkstra {
 				}
 			}
 			if (!cmd.hasOption("n") || cmd.getOptionValue("n") == null) {
-				System.out.println("error: no se ha especificado el numero de vertices. (dijkstra -h para mostrar ayuda)");
+				System.out.println("error: no se ha especificado el numero de vértices. (dijkstra -h para mostrar ayuda)");
 				return;
 			}
 			V = Integer.parseInt(cmd.getOptionValue("n"));
@@ -255,7 +255,7 @@ public class Dijkstra {
 			System.out.println((t2 - t1) / 1000.0f); // milisegundos
 			print(resultados);
 		} else {
-			System.out.println("error: caso de prueba invalido. (puede ser 1 o 2)");
+			System.out.println("error: caso de prueba inválido. (puede ser 1 o 2)");
 		}
 	}
 	

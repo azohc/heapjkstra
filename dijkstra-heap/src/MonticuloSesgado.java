@@ -132,7 +132,7 @@ public class MonticuloSesgado {
         	n1.izq.padre = n1;
         	n1.der = izq;
         	return n1;
-        } else {						// caso simÈtrico
+        } else {						// caso sim√©trico
         	Nodo izq = n2.izq;
         	n2.izq = unir(n1, n2.der);
         	n2.izq.padre = n2;
@@ -158,7 +158,7 @@ public class MonticuloSesgado {
 			return;						// si el hijo sigue siendo mayor o igual
 		}								// que el padre despues de decrecer, no hay que cortar
 		
-		// nodo.padre._valor > nodo._valor: no satisface propiedad de montÌculo
+		// nodo.padre._valor > nodo._valor: no satisface propiedad de mont√≠culo
 		//		cortar nodo para unirlo con monticulo restante
 		Nodo padre = nodo.padre;		// guardar puntero a padre
 		nodo.padre = null;				// cortar padre del nodo
