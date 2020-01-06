@@ -42,9 +42,9 @@ public class Dijkstra {
 		MonticuloSesgado Q = new MonticuloSesgado();
 		int j, k;
 		int[] d = new int[n], p = new int[n];
-		d[s] = 0; p[s] = indefinido;
+		d[s] = 0; p[s] = indefinido;	// inicialización para el nodo origen
 		
-		for (k = 0; k < n; k++) {
+		for (k = 0; k < n; k++) {			// inicialización para los demás nodos
 			if (k != s) {
 				d[k] = coste(g, s, k);
 				p[k] = s;
@@ -239,7 +239,7 @@ public class Dijkstra {
 			System.out.println((t2 - t1) / 1000.0f); // milisegundos
 			print(resultados);
 		} else if (prueba == 2) {
-			Grafo g = new Grafo(true, 5,
+			Grafo g = new Grafo(true, 5,	// dirigido
                     new Grafo.Arista(0, 1, 10),
                     new Grafo.Arista(0, 4, 3),
                     new Grafo.Arista(1, 4, 1),
@@ -264,11 +264,11 @@ public class Dijkstra {
 		options.addOption("d", false, "generar un grafo dirigido");
 		options.addOption("h", false, "imprimir este mensaje");
 		options.addOption("i", true, "numero de veces que se ejecuta el algoritmo");
-		options.addOption("n", true, "cantidad de vÃ©rtices en el grafo");
+		options.addOption("n", true, "cantidad de vértices en el grafo");
 		options.addOption("r", false, "imprimir resultados del algoritmo");
 		options.addOption("s", true, "semilla para objeto Random");
 		options.addOption("t", true, "ejecutar un caso de prueba");
-		options.addOption("u", true, "porcentage de aristas generadas que se eliminarÃ¡n. default: 30");
+		options.addOption("u", true, "porcentage de aristas generadas que se eliminarán. default: 30");
 	}
 }
 	

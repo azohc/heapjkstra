@@ -77,7 +77,7 @@ public class MonticuloSesgado {
 	public MonticuloSesgado(int... vs) {
 		tabla = new HashMap<>();
 		for (int v : vs) {
-			insertar(tam, v);
+			insertar(tam, v); // claves en rango [0, tam)
 		}
 	}
 	
@@ -126,13 +126,13 @@ public class MonticuloSesgado {
         if (n2 == null) 
             return n1; 
         
-        if (n1._valor < n2._valor) {
+        if (n1._valor < n2._valor) {	
         	Nodo izq = n1.izq;
-        	n1.izq = unir(n2, n1.der);
+        	n1.izq = unir(n2, n1.der);	// hijo izq = union del hijo der con el otro arbol 
         	n1.izq.padre = n1;
         	n1.der = izq;
         	return n1;
-        } else {
+        } else {						// caso simétrico
         	Nodo izq = n2.izq;
         	n2.izq = unir(n1, n2.der);
         	n2.izq.padre = n2;
@@ -150,13 +150,19 @@ public class MonticuloSesgado {
 		if (valor >= nodo._valor) return;
 		
 		nodo._valor = valor;
-		if (nodo == raiz) {			// decrecer la raiz no supone problemas
+		if (nodo == raiz) {				// decrecer la raiz no supone problemas
 			return;
 		}
+
+		if (nodo.padre._valor <= nodo._valor) {
+			return;						// si el hijo sigue siendo mayor o igual
+		}								// que el padre despues de decrecer, no hay que cortar
 		
-		Nodo padre = nodo.padre;	// guardar puntero a padre
-		nodo.padre = null;			// cortar padre del nodo
-		if (nodo == padre.izq) {	// cortar nodo del padre
+		// nodo.padre._valor > nodo._valor: no satisface propiedad de montículo
+		//		cortar nodo para unirlo con monticulo restante
+		Nodo padre = nodo.padre;		// guardar puntero a padre
+		nodo.padre = null;				// cortar padre del nodo
+		if (nodo == padre.izq) {		// cortar nodo del padre
 			padre.izq = null;
 		} else {
 			padre.der = null;
