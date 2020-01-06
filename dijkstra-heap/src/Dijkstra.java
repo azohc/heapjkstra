@@ -20,31 +20,31 @@ import org.apache.commons.cli.ParseException;
 public class Dijkstra {
 	
 	private static final String HELP = "dijkstra -n VS [OPTION...] \n" + 
-			"algoritmo de dijkstra de caminos mÌnimos\n" + 
-			"genera un grafo de VS vÈrtices forma aleatoria. imprime el tiempo transcurrido en ejecutar el algoritmo de dijkstra\n" + 
+			"algoritmo de dijkstra de caminos m√°nimos\n" + 
+			"genera un grafo de VS v√©rtices forma aleatoria. imprime el tiempo transcurrido en ejecutar el algoritmo de dijkstra\n" + 
 			"\n" + 
 			"Ejemplos:\n" + 
 			"  dijkstra -t 1                # ejecuta el caso de prueba 1" +		
-			"  dijkstra -n 100 -d  			# genera un grafo dirigido de 100 vÈrtices.\n" + 
-			"  dijkstra -n 10 -r			# genera un grafo de 10 vÈrtices e imprime los resultados.\n" + 
-			"  dijkstra -n 10 -s 50			# genera un grafo de 10 vÈrtices. usa 50 como semilla para el objeto Random.\n" +
-			"  dijkstra -n 10 -u 60			# genera un grafo de 10 vÈrtices. el 60% de las aristas generadas se borrar·n.\n" +
+			"  dijkstra -n 100 -d  			# genera un grafo dirigido de 100 v√©rtices.\n" + 
+			"  dijkstra -n 10 -r			# genera un grafo de 10 v√©rtices e imprime los resultados.\n" + 
+			"  dijkstra -n 10 -s 50			# genera un grafo de 10 v√©rtices. usa 50 como semilla para el objeto Random.\n" +
+			"  dijkstra -n 10 -u 60			# genera un grafo de 10 v√©rtices. el 60% de las aristas generadas se borrar√°n.\n" +
 			"\n";
 	private final static int indefinido = Integer.MAX_VALUE;
 	
 	/**
-	 * El algoritmo recibe un grafo G implementado con listas de adyacencia, y un vÈrtice origen s.
-	 * Devuelve un vector d de distancias minimas desde s a cada vÈrtice, y un vector p de predecesores que 
-	 * indica, para cada vÈrtice k, cual es el vÈrtice anterior a k en el camino mÌnimo desde s hasta k. 
+	 * El algoritmo recibe un grafo G implementado con listas de adyacencia, y un v√©rtice origen s.
+	 * Devuelve un vector d de distancias minimas desde s a cada v√©rtice, y un vector p de predecesores que 
+	 * indica, para cada v√©rtice k, cual es el v√©rtice anterior a k en el camino m√≠nimo desde s hasta k. 
 	 */
 	public static Par<int[], int[]> dijkstra(Grafo g, int s) {
 		int n = g.size();
 		MonticuloSesgado Q = new MonticuloSesgado();
 		int j, k;
 		int[] d = new int[n], p = new int[n];
-		d[s] = 0; p[s] = indefinido;	// inicializaciÛn para el nodo origen
+		d[s] = 0; p[s] = indefinido;	// inicializaci√≥n para el nodo origen
 		
-		for (k = 0; k < n; k++) {			// inicializaciÛn para los dem·s nodos
+		for (k = 0; k < n; k++) {			// inicializaci√≥n para los dem√°s nodos
 			if (k != s) {
 				d[k] = coste(g, s, k);
 				p[k] = s;
@@ -56,7 +56,7 @@ public class Dijkstra {
 			Par<Integer, Integer> pmin = Q.min(); 
 			Q.borrarMin();
 			j = pmin.fst; 				// j = clave del nodo siendo visitado actualmente
-			int costeMin = pmin.snd;	// costeMin = coste mÌnimo a j
+			int costeMin = pmin.snd;	// costeMin = coste m√≠nimo a j
 			
 			List<Par<Integer, Integer>> js = g.ady.get(j);
 			for (k = 0; k < js.size(); k++) {
@@ -81,9 +81,9 @@ public class Dijkstra {
 	private static int coste(Grafo g, int orig, int dest) {
 		if (orig >= g.size() || dest >= g.size()) 
 			throw new IndexOutOfBoundsException(
-					"No se admiten aristas que conecten vÈrtices con indice mayor o igual el numero total de vÈrtices");
+					"No se admiten aristas que conecten v√©rtices con indice mayor o igual el numero total de v√©rtices");
 		
-		// para cada vÈrtice <v', c> adyacente a orig
+		// para cada v√©rtice <v', c> adyacente a orig
 		for (Par<Integer, Integer> par : g.ady.get(orig)) {
 			if (dest == par.fst) {	// si dest = v', existe arista orig -> dest
 				return par.snd;		// devolvemos el coste de la arista
@@ -94,7 +94,7 @@ public class Dijkstra {
 	}
 	
 	static void print(Par<int[], int[]> rs) {
-		System.out.println("vÈrtice\tcoste\tvÈrtice anterior");
+		System.out.println("v√©rtice\tcoste\tv√©rtice anterior");
 		for(int i = 0; i < rs.fst.length; i++) {
 			if (rs.fst[i] == Integer.MAX_VALUE) 
 				System.out.println(i + "\tinf\t" + rs.snd[i]);
@@ -106,7 +106,7 @@ public class Dijkstra {
 	}
 
 	/*
-	 * Genera un grafo de n vÈrtices creando aristas con costes aleatorios
+	 * Genera un grafo de n v√©rtices creando aristas con costes aleatorios
 	 * devuelve el grafo y el numero de aristas que contiene
 	 */
 	static Par<Grafo, Integer> generaGrafo(int n, boolean dirigido, long semilla, int umbral) {
@@ -115,7 +115,7 @@ public class Dijkstra {
 		Random r = new Random(semilla);
 		
 		/*
-		 * Para grafos dirigidos, hay que recorrer n*n vÈrtices para crear las aristas
+		 * Para grafos dirigidos, hay que recorrer n*n v√©rtices para crear las aristas
 		 * Para grafos normales, solo hay que recorrer la mitad inferior a la diagonal (accn)
 		 */
 		int accn = 0;
@@ -143,10 +143,10 @@ public class Dijkstra {
 
 	
 	/*
-	 * algoritmo de dijkstra para caminos mÌnimos 
-	 * implementado con monticulo sesgado (con operaciÛn decrecerClave)
+	 * algoritmo de dijkstra para caminos m√≠nimos 
+	 * implementado con monticulo sesgado (con operaci√≥n decrecerClave)
 	 * 
-	 * par·mtros: -d 
+	 * par√°mtros: -d 
 	 * grafo dirigido o no
 	 */
 	public static void main(String[] args) throws IOException {
@@ -176,7 +176,7 @@ public class Dijkstra {
 				}
 			}
 			if (!cmd.hasOption("n") || cmd.getOptionValue("n") == null) {
-				System.out.println("error: no se ha especificado el numero de vÈrtices. (dijkstra -h para mostrar ayuda)");
+				System.out.println("error: no se ha especificado el numero de v√©rtices. (dijkstra -h para mostrar ayuda)");
 				return;
 			}
 			V = Integer.parseInt(cmd.getOptionValue("n"));
@@ -255,7 +255,7 @@ public class Dijkstra {
 			System.out.println((t2 - t1) / 1000.0f); // milisegundos
 			print(resultados);
 		} else {
-			System.out.println("error: caso de prueba inv·lido. (puede ser 1 o 2)");
+			System.out.println("error: caso de prueba inv√°lido. (puede ser 1 o 2)");
 		}
 	}
 	
@@ -264,11 +264,11 @@ public class Dijkstra {
 		options.addOption("d", false, "generar un grafo dirigido");
 		options.addOption("h", false, "imprimir este mensaje");
 		options.addOption("i", true, "numero de veces que se ejecuta el algoritmo");
-		options.addOption("n", true, "cantidad de vÈrtices en el grafo");
+		options.addOption("n", true, "cantidad de v√©rtices en el grafo");
 		options.addOption("r", false, "imprimir resultados del algoritmo");
 		options.addOption("s", true, "semilla para objeto Random");
 		options.addOption("t", true, "ejecutar un caso de prueba");
-		options.addOption("u", true, "porcentage de aristas generadas que se eliminar·n. default: 30");
+		options.addOption("u", true, "porcentage de aristas generadas que se eliminar√°n. default: 30");
 	}
 }
 	
