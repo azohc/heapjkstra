@@ -23,7 +23,7 @@
 	
 	He elegido Java como lenguaje para variar, ya que el año pasado hice las dos prácticas en C++. Para representar grafos he elegido listas de adyacencia: una lista de pares de enteros para cada vértice (vértice adyacente, coste de la arista).
 	
-	El montículo sesgado contiene un entero (tamaño) y un nodo (raíz). La inclusión de la operación \textit{decrecerClave} trae la necesidad de almacenar y mantener la tabla (clave: entero, valor: nodo) que almacena todos los nodos del montículo. Un nodo contiene un puntero a su nodo padre, además de a sus dos hijos. Para una implementación eficiente de \textit{decrecerClave}, uso estos punteros para \textit{cortar} el nodo objetivo del padre y unirlo con el montículo restante.
+	El montículo sesgado contiene un entero (tamaño) y un nodo (raíz). La inclusión de la operación \texttt{decrecerClave} trae la necesidad de almacenar y mantener la tabla (clave: entero, valor: nodo) que almacena todos los nodos del montículo. Un nodo contiene un puntero a su nodo padre, además de a sus dos hijos. Para una implementación eficiente de \texttt{decrecerClave}, uso estos punteros para \textit{cortar} el nodo objetivo del padre y unirlo con el montículo restante.
 	
 \section{Ejecución}
 	Incluyo también un script llamado \texttt{dijkstra} que puede usarse para compilar y ejecutar el programa. Admite varios argumentos, de los cuales solo es obligatorio \texttt{-n NUM}, usado para generar un grafo de \texttt{NUM} nodos. Se puede omitir este argumento en caso de usar la opción \texttt{-t 1} o \texttt{-t 2}, que ordena la ejecución de uno de los casos de prueba. Los grafos usados para probar el algoritmo se crearon de forma aleatoria, y se puede elegir la semilla con la opción \texttt{-s SEM}. La opción \texttt{-h} proporciona más información acerca de las opciones.
@@ -57,7 +57,7 @@
 		\item que el grafo generado sea dirigido (\texttt{-d})
 		\item que se ejecute el algoritmo 6 veces (\texttt{-i 6})
 	\end{itemize} 
-	La última opción resulta en 6 medidas distintas, de las cuales la primera siempre tenía un valor mucho más elevado al resto (al menos en grafos con no muchos vértices). En la siguiente sección aparecen gráficas que descartan esta primera medida en el cálculo de la media, y otras que la incluyen. También hay gráficas de grafos no dirigidos para los mismos rangos de vértices (mismas instrucciones pero sin la opción \texttt{-d}).
+	La última opción ejecuta el algoritmo 6 veces sobre el mismo grafo con el mismo vértice de salida, y resulta en 6 medidas distintas. La primera medida tenía un valor más elevado al resto: curiosidad que intento razonar más adelante. En la última sección aparecen gráficas que descartan esta primera medida en el cálculo de la media, y otras que la incluyen. También hay gráficas de grafos no dirigidos para los mismos rangos de vértices (mismas instrucciones \texttt{for}, pero sin la opción \texttt{-d}).
 	
 	Finalmente, procesé las medidas en la carpeta \texttt{tiempos} con dos scripts, \texttt{averages.sh} y \texttt{edges.sh}, con el fin de calcular las medias de las medidas y obtener el numero de aristas generadas para la prueba, respectivamente.
 
