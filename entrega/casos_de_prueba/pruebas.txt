@@ -1,6 +1,6 @@
 ejecutar /fuentes/dijkstra con la opción "-t 1" o "-t 2" para ejecutar los casos de prueba (no hay ficheros).
 
-los grafos usados en casos de prueba se encuentran en fuentes/dijkstra-heap/src/Dijkstra.java, (linea 222).
+los grafos usados en casos de prueba se encuentran en fuentes/dijkstra-heap/src/Dijkstra.java, función ejecutarPrueba.
 
 
 prueba 1:
