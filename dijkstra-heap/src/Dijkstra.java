@@ -174,49 +174,50 @@ public class Dijkstra {
 				} else {
 					ejecutarPrueba(Integer.parseInt(cmd.getOptionValue("t")));
 				}
-			}
-			if (!cmd.hasOption("n") || cmd.getOptionValue("n") == null) {
+			} else if (!cmd.hasOption("n") || cmd.getOptionValue("n") == null) {
 				System.out.println("error: no se ha especificado el numero de vértices. (dijkstra -h para mostrar ayuda)");
 				return;
-			}
-			V = Integer.parseInt(cmd.getOptionValue("n"));
-			dirigido = cmd.hasOption("d"); 
-			if (cmd.hasOption("s")) {
-				aux = cmd.getOptionValue("s");			
-				if (aux != null) {
-					semilla = Long.parseLong(cmd.getOptionValue("s"));			
+			} else {
+				V = Integer.parseInt(cmd.getOptionValue("n"));
+				dirigido = cmd.hasOption("d"); 
+				if (cmd.hasOption("s")) {
+					aux = cmd.getOptionValue("s");			
+					if (aux != null) {
+						semilla = Long.parseLong(cmd.getOptionValue("s"));			
+					}
 				}
-			}
-			if (cmd.hasOption("u")) {
-				aux = cmd.getOptionValue("u");			
-				if (aux != null) {
-					umbral = Integer.parseInt(aux); 
+				if (cmd.hasOption("u")) {
+					aux = cmd.getOptionValue("u");			
+					if (aux != null) {
+						umbral = Integer.parseInt(aux); 
+					}
 				}
-			}
-			if (cmd.hasOption("i")) {
-				aux = cmd.getOptionValue("i");			
-				if (aux != null) {
-					iteraciones = Integer.parseInt(aux); 
+				if (cmd.hasOption("i")) {
+					aux = cmd.getOptionValue("i");			
+					if (aux != null) {
+						iteraciones = Integer.parseInt(aux); 
+					}
 				}
-			}
-			Par<Grafo, Integer> grafoGenerado = generaGrafo(V, dirigido, semilla, umbral); 
-			Grafo g = grafoGenerado.fst;
-			Par<int[], int[]> resultados = new Par<int[], int[]>();
-			if (cmd.hasOption("a")) {	// imprimir numero de aristas
-				System.out.println(grafoGenerado.snd);
-			}
-			for (int i = 0; i < iteraciones; i++) {	// solo medir e imprimir tiempo del algoritmo				
-				long t1 = System.nanoTime();
-				resultados = dijkstra(g, 0);
-				long t2 = System.nanoTime();
-				System.out.println((t2 - t1) / 1000.0f); // milisegundos
-			}
-			if (cmd.hasOption("r")) {	// imprimir tabla de resultados
-				print(resultados);				
+				Par<Grafo, Integer> grafoGenerado = generaGrafo(V, dirigido, semilla, umbral); 
+				Grafo g = grafoGenerado.fst;
+				Par<int[], int[]> resultados = new Par<int[], int[]>();
+				if (cmd.hasOption("a")) {	// imprimir numero de aristas
+					System.out.println(grafoGenerado.snd);
+				}
+				for (int i = 0; i < iteraciones; i++) {	// solo medir e imprimir tiempo del algoritmo				
+					long t1 = System.nanoTime();
+					resultados = dijkstra(g, 0);
+					long t2 = System.nanoTime();
+					System.out.println((t2 - t1) / 1000.0f); // milisegundos
+				}
+				if (cmd.hasOption("r")) {	// imprimir tabla de resultados
+					print(resultados);				
+				}
 			}
 		} catch (ParseException e) {
 	        System.err.println("error de parseo: " + e.getMessage());
 		}
+		
 	}
 
 	private static void ejecutarPrueba(int prueba) {

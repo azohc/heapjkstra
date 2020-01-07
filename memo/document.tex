@@ -62,8 +62,51 @@
 	
 	Finalmente, procesé las medidas en la carpeta \texttt{tiempos} con dos scripts, \texttt{averages.sh} y \texttt{edges.sh}, con el fin de calcular las medias de las medidas y obtener el numero de aristas generadas para la prueba, respectivamente.
 
+\newpage
 \section{Casos de prueba sencillos}
+\begin{center}
+	
+	\includegraphics[width=0.4\hsize]{prueba1.png}
+	
+	\texttt{Caso de prueba 1 - Grafo no dirigido}
+	\newline
+	
+	\begin{tabular}{c|*{3}{l|}l}
+		
+		\#it	& v & d[v] & Camino mínimo & Q, d[i] y p[i] \\[0.1cm]
+		\hline
+		0 		& 0 & 0    & [0]           & [--, 7\textsubscript{0}, 9\textsubscript{0}, $\infty$, $\infty$, 14\textsubscript{0}]\\[0.07cm]
+		1 		& 1 & 7    & [0, 1]        & [--, --, 9\textsubscript{0}, 22\textsubscript{1}, $\infty$, 14\textsubscript{0}]\\[0.07cm]
+		2 		& 2 & 9    & [0, 2]        & [--, --, --, 20\textsubscript{2}, $\infty$, 11\textsubscript{2}]\\[0.07cm]
+		3 		& 5 & 11   & [0, 2, 5]     & [--, --, --, 20\textsubscript{2}, 20\textsubscript{5}, --]\\[0.07cm]
+		4 		& 3 & 20   & [0, 2, 3]     & [--, --, --, --, 20\textsubscript{5}, --]\\[0.07cm]
+		5 		& 4 & 20   & [0, 2, 5, 4]  & [--, --, --, --, --, --]\\[0.07cm]
+	\end{tabular}
+	
+	
+	\vspace*{0.03\vsize}
+	\par\noindent\rule{\textwidth}{1pt}
 
+	
+	\includegraphics[width=0.5\hsize]{prueba2.png}
+	
+	\texttt{Caso de prueba 2 - Grafo dirigido}
+	\newline
+	
+	\begin{tabular}{c|*{3}{l|}l}
+		
+		\#it	& v & d[v] & Camino mínimo & Q, d[i] y p[i] \\[0.1cm]
+		\hline
+		0 		& 0 & 0    & [0]           & [--, 10\textsubscript{0}, $\infty$, $\infty$, 3\textsubscript{0}]\\[0.07cm]
+		1 		& 4 & 3    & [0, 4]        & [--, 10\textsubscript{0}, $\infty$, $\infty$, --]\\[0.07cm]
+		2 		& 1 & 10   & [0, 1]        & [--, --, 15\textsubscript{1}, $\infty$, --]\\[0.07cm]
+		3 		& 2 & 15   & [0, 1, 2]     & [--, --, --, 22\textsubscript{2}, --]\\[0.07cm]
+		4 		& 3 & 22   & [0, 1, 2, 3]     & [--, --, --, --, --]\\[0.07cm]
+
+	\end{tabular}
+	
+\end{center}	
+\newpage
 \section{Resultados}
 
 	A continuación aparecen las gráficas. De las 6 ejecuciones en cada numero de nodos probado, las dos primeras gráficas no tienen en cuenta la primera ejecución: el primer tiempo medido era mucho mayor que el del resto, que no variaba mucho de uno a otro. Esto lo pude comprobar observando el comportamiento en un número alto de iteraciones con la opción \texttt{-i}.
