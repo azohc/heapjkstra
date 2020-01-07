@@ -1,7 +1,7 @@
 #! /bin/bash
 # halla las medias de los tiempos para cada n distinta
+#dir="tiempos"
 dir="tiemposdir"
-cd ..
 for N in `ls -v $dir`;           # para todas las ejecuciones (N nodos)
 do
 	sum=0

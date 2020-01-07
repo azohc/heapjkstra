@@ -20,7 +20,7 @@ import org.apache.commons.cli.ParseException;
 public class Dijkstra {
 	
 	private static final String HELP = "dijkstra -n VS [OPTION...] \n" + 
-			"algoritmo de dijkstra de caminos mánimos\n" + 
+			"algoritmo de dijkstra de caminos mínimos\n" + 
 			"genera un grafo de VS vértices forma aleatoria. imprime el tiempo transcurrido en ejecutar el algoritmo de dijkstra\n" + 
 			"\n" + 
 			"Ejemplos:\n" + 
