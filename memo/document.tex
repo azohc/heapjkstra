@@ -3,9 +3,8 @@
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx}
 \graphicspath{ {./images/} }
+\usepackage{makecell}
 
-\usepackage{tikz}
-\usetikzlibrary{automata}
 
 
 \title{Práctica MARP\\Algorítmo de dijkstra con montículo sesgado}
@@ -73,7 +72,8 @@
 	
 	\begin{tabular}{c|*{3}{l|}l}
 		
-		\#it	& v & d[v] & Camino mínimo & Q, d[i] y p[i] \\[0.1cm]
+		\#it	& $v$ & d[v] & Camino mínimo a $v$ & \thead[l]{para cada $i \in [0,5]$:\\
+			-- si $v\textsubscript{$i$} \notin Q$ $\|$ $\infty$ si $v\textsubscript{$i$}$ no descubierto $\|$ d[$v$]\textsubscript{p[$v$]}}\\
 		\hline
 		0 		& 0 & 0    & [0]           & [--, 7\textsubscript{0}, 9\textsubscript{0}, $\infty$, $\infty$, 14\textsubscript{0}]\\[0.07cm]
 		1 		& 1 & 7    & [0, 1]        & [--, --, 9\textsubscript{0}, 22\textsubscript{1}, $\infty$, 14\textsubscript{0}]\\[0.07cm]
@@ -95,7 +95,8 @@
 	
 	\begin{tabular}{c|*{3}{l|}l}
 		
-		\#it	& v & d[v] & Camino mínimo & Q, d[i] y p[i] \\[0.1cm]
+		\#it	& $v$ & d[v] & Camino mínimo a $v$ & \thead[l]{para cada $i \in [0,5]$:\\
+		-- si $v\textsubscript{$i$} \notin Q$ $\|$ $\infty$ si $v\textsubscript{$i$}$ no descubierto $\|$ d[$v$]\textsubscript{p[$v$]}}\\
 		\hline
 		0 		& 0 & 0    & [0]           & [--, 10\textsubscript{0}, $\infty$, $\infty$, 3\textsubscript{0}]\\[0.07cm]
 		1 		& 4 & 3    & [0, 4]        & [--, 10\textsubscript{0}, $\infty$, $\infty$, --]\\[0.07cm]
